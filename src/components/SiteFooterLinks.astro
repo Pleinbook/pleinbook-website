@@ -1,0 +1,61 @@
+---
+// Shared by the homepage and every manual page.
+import Brushmark from './Brushmark.astro';
+const year = new Date().getFullYear();
+---
+
+<div class="pb-footer">
+	<div class="row">
+		<a class="mark" href="/" aria-label="Pleinbook home"><Brushmark size={22} /> Pleinbook</a>
+		<nav aria-label="Site">
+			<a href="/docs/">Manual</a>
+			<a href="/support/">Support</a>
+			<a href="/changelog/">Changelog</a>
+			<a href="/privacy/">Privacy</a>
+		</nav>
+	</div>
+	<p>© {year} Pleinbook. Pleinbook is not affiliated with Krita.</p>
+</div>
+
+<style>
+	.pb-footer {
+		margin-top: 3rem;
+		padding-top: 1.25rem;
+		border-top: 0.5px solid var(--pb-rule);
+		color: var(--pb-ink-3);
+		font-family: var(--pb-font);
+		font-size: 14px;
+	}
+	.row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px 24px;
+		padding-block: 12px 10px;
+	}
+	.mark {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		color: var(--pb-ink);
+		font-size: 15px;
+		font-weight: 650;
+		text-decoration: none;
+	}
+	nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px 20px;
+	}
+	nav a {
+		color: var(--pb-ink-2);
+		text-decoration: none;
+	}
+	nav a:hover {
+		color: var(--pb-ink);
+	}
+	p {
+		margin: 0;
+	}
+</style>

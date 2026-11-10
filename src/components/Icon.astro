@@ -1,0 +1,64 @@
+---
+// Lucide icons (ISC), inlined at build time. Add a name to the glob below to use a new icon.
+// `slash` draws a diagonal line through the icon, with a gap cut around it, like SF Symbols' ".slash".
+const icons = import.meta.glob(
+	'/node_modules/lucide-static/icons/{book,book-open,chevron-left,plus,lock,lock-open,contrast,flip-horizontal-2,flip-vertical-2,sliders-horizontal,grid-3x3,pipette,palette,circle-dashed,brush,paintbrush,sun,lasso,droplets,layers,undo-2,search,tablet,arrow-right,arrow-up-right,file-down,cloud,film,heart,menu,x,sun-moon,hand,pencil,infinity,gift,book-image,grid-2x2}.svg',
+	{ query: '?raw', import: 'default', eager: true },
+) as Record<string, string>;
+
+// Our own icons, in Lucide's format, built from Lucide's own paths (ISC). Each gets a unique id for its defs.
+//  layer:       the top sheet of `layers`, centred: one layer, not a stack.
+//  brush-wrench: `brush`'s bristles and ferrule at the bottom; the handle carries on into `wrench`'s head.
+//               Both icons share the x + y = 24 diagonal and handle width, so the wrench is clipped at the
+//               ferrule line (x − y = 1) and joins without a seam.
+const open = (extra = '') =>
+	`<svg class="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"${extra}>`;
+const custom: Record<string, (uid: string) => string> = {
+	layer: () =>
+		open() +
+		'<path transform="translate(0 5)" d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/></svg>',
+	'brush-wrench': (uid) =>
+		open() +
+		`<clipPath id="${uid}"><path d="M1 0H24V23z"/></clipPath>` +
+		`<path clip-path="url(#${uid})" d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/>` +
+		'<path d="M6.967 14.031 11 10"/><path d="M9.969 17.031 14 13"/><path d="m11 10 3 3"/>' +
+		'<path d="M6.5 21A3.5 3.5 0 1 0 3 17.5a2.62 2.62 0 0 1-.708 1.792A1 1 0 0 0 3 21z"/></svg>',
+};
+
+interface Props {
+	name: string;
+	size?: number;
+	stroke?: number;
+	class?: string;
+	label?: string;
+	/** Draw a slash through the icon: 'down' runs top-left to bottom-right, 'up' the other way. */
+	slash?: boolean | 'down' | 'up';
+}
+const { name, size = 20, stroke = 1.75, class: className = '', label, slash = false } = Astro.props;
+const raw = custom[name]?.(`pb-i-${name}-${Math.random().toString(36).slice(2, 7)}`) ?? icons[`/node_modules/lucide-static/icons/${name}.svg`];
+if (!raw) throw new Error(`Icon "${name}" is not in the list in Icon.astro`);
+const a11y = label ? `role="img" aria-label="${label}"` : 'aria-hidden="true"';
+let svg = raw
+	.replace(/<!--.*?-->\s*/s, '')
+	.replace(/class="[^"]*"/, `class="pb-icon ${className}" ${a11y} focusable="false"`)
+	.replace(/width="24"/, `width="${size}"`)
+	.replace(/height="24"/, `height="${size}"`)
+	.replace(/stroke-width="2"/, `stroke-width="${stroke}"`);
+
+if (slash) {
+	const id = `pb-slash-${name}-${Math.random().toString(36).slice(2, 7)}`;
+	const open = svg.indexOf('>') + 1;
+	const close = svg.lastIndexOf('</svg>');
+	const body = svg.slice(open, close);
+	// The mask cuts a gap either side of the line, so it reads as a slash rather than a scribble.
+	const line = slash === 'up' ? 'x1="20.5" y1="3.5" x2="3.5" y2="20.5"' : 'x1="3.5" y1="3.5" x2="20.5" y2="20.5"';
+	svg =
+		svg.slice(0, open) +
+		`<mask id="${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">` +
+		`<rect width="24" height="24" fill="#fff"/><line ${line} stroke="#000" stroke-width="${stroke * 2.4}"/></mask>` +
+		`<g mask="url(#${id})">${body}</g><line ${line}/>` +
+		'</svg>';
+}
+---
+
+<Fragment set:html={svg} />

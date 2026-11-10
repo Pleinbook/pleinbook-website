@@ -1,0 +1,37 @@
+---
+// The Pleinbook brushmark from the app icon (App/Resources/AppIcon.icon), with the icon's blue → green fill.
+interface Props {
+	size?: number;
+	class?: string;
+	/** Draw it on the icon's cream tile, as on the home screen. */
+	tile?: boolean;
+}
+const { size = 28, class: className = '', tile = false } = Astro.props;
+const id = `pb-mark-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<svg
+	class:list={['pb-brushmark', className]}
+	width={size}
+	height={size}
+	viewBox="0 0 1024 1024"
+	aria-hidden="true"
+	focusable="false"
+>
+	<defs>
+		<linearGradient id={id} x1="0" y1="0.27" x2="0" y2="1.02">
+			<stop offset="0" stop-color="#00457f"></stop>
+			<stop offset="1" stop-color="#91e055"></stop>
+		</linearGradient>
+	</defs>
+	{tile && <rect width="1024" height="1024" rx="230" fill="#f2ecdd" />}
+	<g transform={tile ? 'translate(52 -48) scale(0.9) translate(0 57)' : 'translate(-20 0)'}>
+		<g transform="scale(3.40199) matrix(1.060884,-0.202111,0.202745,1.064213,-39.569186,19.762586)">
+			<path
+				fill={`url(#${id})`}
+				fill-rule="evenodd"
+				d="M65.98,256.5C80.92,251.689 90.373,248.414 99.715,234.628C112.343,215.994 98.811,187.389 97.066,183.701C86.753,161.903 51.397,91.107 113.377,51.293C156.16,23.811 233.565,49.957 225.178,129.451C224.246,138.281 218.814,189.766 171.627,226.669C119.462,267.464 68.601,257.652 65.98,256.5ZM117.032,111.458C117.329,108.964 119.258,92.784 133.69,84.847C164.122,68.108 188.368,96.35 186.621,115.507C182.141,164.623 114.47,158.375 117.032,111.458Z"
+			></path>
+		</g>
+	</g>
+</svg>

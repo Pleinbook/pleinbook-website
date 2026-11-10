@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pleinbook.com/sitemap-index.xml

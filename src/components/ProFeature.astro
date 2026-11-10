@@ -1,0 +1,33 @@
+---
+// Marks a feature that needs the one-off Pleinbook unlock.
+// Use it on any page that mentions a paid feature, so the free/paid split reads the same everywhere.
+// Sidebar pages for paid features also carry `sidebar: { badge: { text: 'Unlock', variant: 'note' } }`.
+interface Props {
+	/** Optional name of the feature, e.g. "Replay video export". */
+	feature?: string;
+}
+const { feature } = Astro.props;
+---
+
+<aside class="pb-pro" aria-label="Paid feature">
+	<strong>{feature ? `${feature} is part of the unlock.` : 'Part of the unlock.'}</strong>
+	<span>A one-off purchase in the app. Everything you need to paint stays free.</span>
+</aside>
+
+<style>
+	.pb-pro {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		margin-block: 1rem;
+		padding: 0.75rem 1rem;
+		border-inline-start: 3px solid var(--pb-accent);
+		border-radius: 0 var(--pb-radius) var(--pb-radius) 0;
+		background: var(--pb-accent-soft);
+		color: var(--pb-ink);
+		font-size: 0.9375rem;
+	}
+	span {
+		color: var(--pb-ink-soft);
+	}
+</style>

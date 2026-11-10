@@ -1,0 +1,44 @@
+---
+// An iPad frame around a real screenshot of Pleinbook's drawing screen.
+// TODO: placeholder screenshot (a brush-testing page). Replace it with a real painting, or a short
+// screen recording played as a silent loop, and update the alt text to match.
+import { Image } from 'astro:assets';
+import screenshot from '../assets/screenshots/drawing-placeholder.webp';
+---
+
+<figure class="device">
+	<div class="screen">
+		<Image
+			src={screenshot}
+			alt="Pleinbook on iPad: a page of thick, textured brush strokes in blue, green, yellow, red and pink, mixed into each other, with the toolbar along the top and the tool rail on the right."
+			widths={[640, 1040, 1600, 2000]}
+			sizes="(min-width: 1104px) 1008px, calc(100vw - 64px)"
+			loading="eager"
+			fetchpriority="high"
+		/>
+	</div>
+</figure>
+
+<style>
+	.device {
+		margin: 0;
+		padding: clamp(8px, 1.4vw, 16px);
+		border-radius: clamp(22px, 3.6vw, 44px);
+		background: linear-gradient(160deg, #3b3936, #1c1b19 40%, #2b2a27);
+		box-shadow:
+			inset 0 0 0 1px rgb(255 255 255 / 0.08),
+			inset 0 1px 0 rgb(255 255 255 / 0.18),
+			0 2px 4px rgb(40 30 15 / 0.08),
+			0 30px 60px -30px rgb(40 30 15 / 0.35);
+	}
+	.screen {
+		overflow: hidden;
+		border-radius: clamp(14px, 2.4vw, 30px);
+		background-color: #f2ecdd;
+	}
+	.screen :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+</style>

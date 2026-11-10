@@ -1,0 +1,205 @@
+/*
+ * Pleinbook shared look. The homepage uses this directly; starlight.css maps it onto the manual.
+ *
+ * Taken from the app: cream paper (the launch colour, #f2ecdd) with a fine grain, system type,
+ * and chrome as floating frosted capsules. Brand colours are the icon's brushmark gradient.
+ * Starlight sets data-theme="light" | "dark" on <html>; the homepage does the same.
+ */
+/* Headings: Fraunces (SIL Open Font License), self-hosted. Full axes for SOFT and WONK. */
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/fraunces/full-italic.css';
+
+:root {
+	/* Paper and ink */
+	--pb-paper: #f2ecdd;
+	--pb-paper-deep: #e9e1cd;
+	--pb-ink: #1d1c1a;
+	--pb-ink-2: #4a4640;
+	--pb-ink-3: #645e55;
+	--pb-rule: rgb(60 50 35 / 0.12);
+
+	/* Brand: the brushmark gradient, plus a link blue that reads on paper */
+	--pb-brand-blue: #00457f;
+	--pb-brand-green: #91e055;
+	--pb-brand: linear-gradient(135deg, #00457f 0%, #2a7976 55%, #91e055 100%);
+	--pb-link: #0b5cad;
+	--pb-link-hover: #00457f;
+	--pb-focus: #0a84ff;
+
+	/* Glass: the app's floating chrome */
+	--pb-glass-bg: rgb(255 255 255 / 0.5);
+	--pb-glass-bg-strong: rgb(255 255 255 / 0.8);
+	/* The bevel: light catching the rim, brightest at the top-left and bottom-right corners. */
+	--pb-glass-rim: linear-gradient(
+		135deg,
+		rgb(255 255 255 / 1) 0%,
+		rgb(255 255 255 / 0.45) 18%,
+		rgb(255 255 255 / 0.12) 45%,
+		rgb(255 255 255 / 0.12) 60%,
+		rgb(255 255 255 / 0.55) 85%,
+		rgb(255 255 255 / 0.95) 100%
+	);
+	--pb-glass-depth: inset 1px 1px 1px rgb(255 255 255 / 0.35), inset -1px -1px 1px rgb(90 70 40 / 0.06);
+	--pb-glass-border: rgb(255 255 255 / 0.75);
+	--pb-glass-edge: rgb(80 60 30 / 0.1);
+	--pb-glass-highlight: rgb(255 255 255 / 0.95);
+	--pb-glass-shadow: 0 1px 2px rgb(60 45 20 / 0.05), 0 6px 16px -8px rgb(60 45 20 / 0.12);
+	--pb-glass-blur: blur(22px) saturate(1.7);
+	--pb-glass-hover: rgb(255 255 255 / 0.55);
+
+	/* Primary button: ink capsule, like the App Store button */
+	--pb-cta-bg: #1d1c1a;
+	--pb-cta-fg: #fbf8f1;
+
+	--pb-font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Segoe UI', Roboto,
+		'Helvetica Neue', Arial, sans-serif;
+	--pb-font-rounded: ui-rounded, 'SF Pro Rounded', var(--pb-font);
+	--pb-font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+	/* Headings. Use with --pb-display-axes; the colour line in the hero is the italic. */
+	--pb-font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+	--pb-display-axes: 'SOFT' 100, 'WONK' 1, 'opsz' 144;
+
+	--pb-radius-s: 12px;
+	--pb-radius: 22px;
+	--pb-radius-l: 32px;
+	--pb-measure: 64ch;
+
+	/* Paper grain: two layers of noise, tiled. */
+	/* Light paper grain; also used for the cream paper inside cards in dark mode. */
+	--pb-grain-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.28 0 0 0 0 0.18 0 0 0 0.3 -0.11'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.02' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 0 0.25 0 0 0 0.08 -0.025'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+	--pb-grain: var(--pb-grain-light);
+
+
+	color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--pb-paper: #171614;
+		--pb-paper-deep: #1f1d1a;
+		--pb-ink: #f3efe6;
+		--pb-ink-2: #c4bdb1;
+		--pb-ink-3: #a39c90;
+		--pb-rule: rgb(255 245 225 / 0.1);
+		--pb-link: #7db7ff;
+		--pb-link-hover: #a9d0ff;
+		--pb-glass-bg: rgb(50 47 43 / 0.55);
+		--pb-glass-bg-strong: rgb(60 57 52 / 0.88);
+		--pb-glass-rim: linear-gradient(
+			135deg,
+			rgb(255 250 240 / 0.5) 0%,
+			rgb(255 250 240 / 0.16) 18%,
+			rgb(255 250 240 / 0.04) 45%,
+			rgb(255 250 240 / 0.04) 60%,
+			rgb(255 250 240 / 0.18) 85%,
+			rgb(255 250 240 / 0.42) 100%
+		);
+		--pb-glass-depth: inset 1px 1px 1px rgb(255 250 240 / 0.07), inset -1px -1px 1px rgb(0 0 0 / 0.3);
+		--pb-glass-border: rgb(255 250 240 / 0.14);
+		--pb-glass-edge: rgb(0 0 0 / 0.4);
+		--pb-glass-highlight: rgb(255 250 240 / 0.16);
+		--pb-glass-shadow: 0 1px 2px rgb(0 0 0 / 0.22), 0 8px 18px -10px rgb(0 0 0 / 0.4);
+		--pb-glass-hover: rgb(255 250 240 / 0.08);
+		--pb-cta-bg: #f3efe6;
+		--pb-cta-fg: #171614;
+		--pb-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0.13 -0.048'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+		color-scheme: dark;
+	}
+}
+
+:root[data-theme='dark'] {
+	--pb-paper: #171614;
+	--pb-paper-deep: #1f1d1a;
+	--pb-ink: #f3efe6;
+	--pb-ink-2: #c4bdb1;
+	--pb-ink-3: #a39c90;
+	--pb-rule: rgb(255 245 225 / 0.1);
+	--pb-link: #7db7ff;
+	--pb-link-hover: #a9d0ff;
+	--pb-glass-bg: rgb(50 47 43 / 0.55);
+	--pb-glass-bg-strong: rgb(60 57 52 / 0.88);
+	--pb-glass-rim: linear-gradient(
+		135deg,
+		rgb(255 250 240 / 0.5) 0%,
+		rgb(255 250 240 / 0.16) 18%,
+		rgb(255 250 240 / 0.04) 45%,
+		rgb(255 250 240 / 0.04) 60%,
+		rgb(255 250 240 / 0.18) 85%,
+		rgb(255 250 240 / 0.42) 100%
+	);
+	--pb-glass-depth: inset 1px 1px 1px rgb(255 250 240 / 0.07), inset -1px -1px 1px rgb(0 0 0 / 0.3);
+	--pb-glass-border: rgb(255 250 240 / 0.14);
+	--pb-glass-edge: rgb(0 0 0 / 0.4);
+	--pb-glass-highlight: rgb(255 250 240 / 0.16);
+	--pb-glass-shadow: 0 1px 2px rgb(0 0 0 / 0.22), 0 8px 18px -10px rgb(0 0 0 / 0.4);
+	--pb-glass-hover: rgb(255 250 240 / 0.08);
+	--pb-cta-bg: #f3efe6;
+	--pb-cta-fg: #171614;
+	--pb-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0.13 -0.048'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	color-scheme: dark;
+}
+
+/* ---- Shared pieces ---- */
+
+/* Paper ground with grain. */
+.pb-paper {
+	background-color: var(--pb-paper);
+	background-image: var(--pb-grain);
+}
+
+/*
+ * Glass: a flat slab, not a pill. An even translucent tint over a blur, a bevelled rim of light
+ * (::before, brightest at the top-left and bottom-right corners), a faint inner light and shade just
+ * inside the rim, and a soft drop shadow. No gradient across the face, so it doesn't read as curved.
+ */
+.pb-glass {
+	position: relative;
+	isolation: isolate;
+	background: var(--pb-glass-bg);
+	-webkit-backdrop-filter: var(--pb-glass-blur);
+	backdrop-filter: var(--pb-glass-blur);
+	border: 0;
+	box-shadow:
+		var(--pb-glass-depth),
+		inset 0 0 0 0.5px var(--pb-glass-edge),
+		var(--pb-glass-shadow);
+}
+.pb-glass::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	padding: 1.25px;
+	border-radius: inherit;
+	background: var(--pb-glass-rim);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask:
+		linear-gradient(#000 0 0) content-box exclude,
+		linear-gradient(#000 0 0);
+	pointer-events: none;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+	.pb-glass {
+		background: var(--pb-glass-bg-strong);
+	}
+}
+
+:where(a, button, [tabindex]):focus-visible {
+	outline: 2px solid var(--pb-focus);
+	outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}

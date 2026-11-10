@@ -1,0 +1,271 @@
+/*
+ * The manual in the app's clothes: grained paper behind everything, a floating glass capsule for
+ * the header, the sidebar as a floating glass card, and the homepage's type. Tokens: theme.css.
+ */
+
+:root,
+:root[data-theme='light'],
+:root[data-theme='dark'] {
+	--sl-font: var(--pb-font);
+	--sl-font-mono: var(--pb-font-mono);
+	--sl-nav-height: 4.75rem;
+	--sl-sidebar-width: 19.5rem;
+
+	--sl-color-accent-low: rgb(10 132 255 / 0.14);
+	--sl-color-accent: var(--pb-link);
+	--sl-color-accent-high: var(--pb-link-hover);
+	--sl-color-text-accent: var(--pb-link);
+
+	--sl-color-bg: var(--pb-paper);
+	--sl-color-bg-nav: transparent;
+	--sl-color-bg-sidebar: transparent;
+	--sl-color-hairline: var(--pb-rule);
+	--sl-color-hairline-light: var(--pb-rule);
+	--sl-color-hairline-shade: var(--pb-rule);
+	--sl-color-text: var(--pb-ink-2);
+	--sl-color-white: var(--pb-ink);
+	--sl-color-gray-1: var(--pb-ink);
+	--sl-color-gray-2: var(--pb-ink-2);
+	--sl-color-gray-3: var(--pb-ink-3);
+	--sl-color-bg-inline-code: rgb(120 100 70 / 0.12);
+	--sl-color-backdrop-overlay: rgb(30 25 20 / 0.35);
+}
+
+body {
+	background-color: var(--pb-paper);
+	background-image: var(--pb-grain);
+	-webkit-font-smoothing: antialiased;
+}
+
+/* ---- Glass recipe (same as .pb-glass in theme.css), applied to Starlight's own elements ---- */
+.header,
+.sidebar-pane,
+.pagination-links a {
+	isolation: isolate;
+	background: var(--pb-glass-bg);
+	-webkit-backdrop-filter: var(--pb-glass-blur);
+	backdrop-filter: var(--pb-glass-blur);
+	border: 0;
+	box-shadow:
+		var(--pb-glass-depth),
+		inset 0 0 0 0.5px var(--pb-glass-edge),
+		var(--pb-glass-shadow);
+}
+.pagination-links a {
+	position: relative;
+}
+.header::before,
+.sidebar-pane::before,
+.pagination-links a::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	padding: 1.25px;
+	border-radius: inherit;
+	background: var(--pb-glass-rim);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask:
+		linear-gradient(#000 0 0) content-box exclude,
+		linear-gradient(#000 0 0);
+	pointer-events: none;
+}
+
+/* ---- Header: floating capsule ---- */
+header.header {
+	top: 10px;
+	inset-inline: 12px;
+	width: auto;
+	height: calc(var(--sl-nav-height) - 1.25rem);
+	padding: 0 10px 0 18px;
+	border-radius: 999px;
+}
+.site-title {
+	gap: 10px;
+	color: var(--pb-ink);
+	font-size: 17px;
+	font-weight: 650;
+	letter-spacing: -0.01em;
+}
+.site-title img {
+	width: 26px;
+	height: 26px;
+}
+site-search > button {
+	height: 38px;
+	border: 0;
+	border-radius: 999px;
+	background: rgb(120 100 70 / 0.1);
+	color: var(--pb-ink-2);
+}
+:root[data-theme='dark'] site-search > button {
+	background: rgb(0 0 0 / 0.25);
+}
+site-search > button:hover {
+	color: var(--pb-ink);
+}
+starlight-theme-select select {
+	border-radius: 999px;
+}
+
+/* ---- Sidebar: floating glass card on wide screens ---- */
+@media (min-width: 50rem) {
+	.sidebar-pane {
+		top: calc(var(--sl-nav-height) + 2px);
+		bottom: 12px;
+		inset-inline-start: 12px;
+		height: auto;
+		width: calc(var(--sl-sidebar-width) - 24px);
+		border-radius: var(--pb-radius);
+		overflow: hidden;
+	}
+	.sidebar-pane .sidebar-content {
+		padding: 14px 12px 16px;
+	}
+	.main-frame {
+		padding-inline-start: calc(var(--sl-sidebar-width) + 8px);
+	}
+}
+/* Phone menu: the sidebar opens as a solid glass sheet */
+@media (max-width: 49.999rem) {
+	.sidebar-pane {
+		top: calc(var(--sl-nav-height) + 2px);
+		inset-inline: 12px;
+		bottom: 12px;
+		height: auto;
+		border-radius: var(--pb-radius);
+		background: var(--pb-glass-bg-strong);
+	}
+}
+
+.sidebar-content {
+	font-size: 15px;
+}
+.sidebar-content summary .group-label .large,
+.sidebar-content .group-label .large {
+	color: var(--pb-ink);
+	font-size: 14px;
+	font-weight: 650;
+}
+.sidebar-content a {
+	border-radius: 10px;
+	padding-block: 6px;
+	color: var(--pb-ink-2);
+}
+.sidebar-content a:hover {
+	background: var(--pb-glass-hover);
+	color: var(--pb-ink);
+}
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover,
+.sidebar-content a[aria-current='page']:focus {
+	background: var(--pb-glass-bg-strong);
+	color: var(--pb-ink);
+	font-weight: 600;
+	box-shadow:
+		inset 0 1px 0 var(--pb-glass-highlight),
+		inset 0 0 0 1.5px #0a84ff;
+}
+.sidebar-content .sl-badge {
+	border: 0;
+	border-radius: 999px;
+	background: var(--pb-brand);
+	color: #fff;
+	font-weight: 600;
+}
+.sidebar-content ul ul {
+	border-inline-start: 0;
+}
+
+/* ---- Right column (On this page) ---- */
+.right-sidebar {
+	border-inline-start: 0;
+}
+.right-sidebar-panel h2 {
+	color: var(--pb-ink-3);
+	font-size: 13px;
+	font-weight: 600;
+}
+.right-sidebar-panel a[aria-current='true'] {
+	color: var(--pb-link);
+	font-weight: 600;
+}
+mobile-starlight-toc nav {
+	border-bottom: 0;
+}
+mobile-starlight-toc nav summary,
+mobile-starlight-toc .toggle {
+	border-radius: 999px;
+}
+
+/* ---- Content ---- */
+.content-panel {
+	border-top: 0;
+}
+h1#_top,
+.sl-markdown-content :is(h2, h3) {
+	font-family: var(--pb-font-display);
+	font-variation-settings: var(--pb-display-axes);
+}
+h1#_top {
+	color: var(--pb-ink);
+	font-size: clamp(34px, 5vw, 48px);
+	font-weight: 600;
+	line-height: 1.08;
+	letter-spacing: -0.02em;
+}
+.sl-markdown-content {
+	color: var(--pb-ink-2);
+	font-size: 17px;
+	line-height: 1.6;
+}
+.sl-markdown-content :is(h2, h3, h4) {
+	color: var(--pb-ink);
+	font-weight: 600;
+	letter-spacing: -0.015em;
+}
+.sl-markdown-content h2 {
+	font-size: 28px;
+}
+.sl-markdown-content a {
+	color: var(--pb-link);
+	text-underline-offset: 3px;
+}
+.sl-markdown-content code:not(pre code) {
+	border-radius: 6px;
+}
+
+/* Callouts and the draft notice: rounded, glassy */
+.starlight-aside {
+	border: 0;
+	border-radius: 16px;
+	box-shadow: inset 0 0 0 0.5px var(--pb-glass-edge);
+}
+.sl-banner,
+.starlight-aside--caution {
+	border-radius: 16px;
+}
+
+/* Prev / next */
+.pagination-links a {
+	border-radius: var(--pb-radius);
+	color: var(--pb-ink);
+}
+.pagination-links a:hover {
+	background: var(--pb-glass-bg-strong);
+}
+.pagination-links .link-title {
+	color: var(--pb-ink);
+	font-weight: 650;
+	letter-spacing: -0.015em;
+}
+
+/* Splash pages (support, privacy, changelog) */
+[data-has-hero] .content-panel,
+.splash .content-panel {
+	max-width: 48rem;
+	margin-inline: auto;
+}
