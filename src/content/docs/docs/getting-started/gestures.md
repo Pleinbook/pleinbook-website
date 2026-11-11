@@ -10,7 +10,6 @@ TODO: write this page.
 <!--
 This page should cover:
   - Gesture map: Pencil paints, one finger smudges (assignable), hold to eyedrop
-  - Double-tapping the Pencil opens the kit ring (the default; check what squeeze does on Pencil Pro and whether it can be reassigned); the on-screen button always works
-  - Palm rejection: large contacts are ignored, fingers are ignored while the Pencil hovers or touches
+  - Defaults: double-tap opens the kit ring; squeeze (Apple Pencil Pro) picks up the colour under the hovering tip. Each can be Kit ring, Pick a colour or Nothing (Settings › Apple Pencil); the on-screen button always works
   - Check whether Pleinbook still adapts to which Pencil you have on first use
 -->

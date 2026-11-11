@@ -1,6 +1,6 @@
 ---
 title: "Conflict copies"
-description: "What happens when two iPads change the same page."
+description: "What happens when two devices change the same page."
 sidebar:
   order: 2
   badge:

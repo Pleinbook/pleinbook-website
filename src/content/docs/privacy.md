@@ -9,7 +9,7 @@ TODO: write this page.
 <!--
 This page should cover:
   - App Store Connect needs this page as the privacy policy URL
-  - Paintings, scratchpads and brushes stay on the iPad; nothing goes to a Pleinbook server
+  - Paintings, scratchpads and brushes stay on your device; nothing goes to a Pleinbook server
   - iCloud sync (paid) uses the user's own CloudKit private database
   - Purchases go through Apple (StoreKit); Pleinbook sees no payment details
   - Analytics and crash reporting: state exactly what, if anything, is collected

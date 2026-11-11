@@ -1,54 +1,40 @@
 ---
-// The homepage's floating chrome, laid out like the app's: a capsule top bar at the top left and a
-// lone corner button at the top right.
+// The site's floating chrome, laid out like the app's: a capsule top bar at the top left and a
+// lone corner button at the top right. Used on the homepage and, through ManualHeader.astro, on every
+// manual page, where Starlight's search goes in the `search` slot. The current section is highlighted.
+// There's no light/dark switch: the site follows the device's setting.
 import Brushmark from './Brushmark.astro';
-import Icon from './Icon.astro';
 import AppStoreGlyph from './AppStoreGlyph.astro';
 import { appStoreLink } from '../data/site';
 const store = appStoreLink();
+const path = Astro.url.pathname;
+const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'page' as const } : {});
 ---
 
-<header class="nav">
+<div class="nav">
 	<nav class="bar pb-glass" aria-label="Main">
 		<a class="home" href="/" aria-label="Pleinbook home">
 			<Brushmark size={26} />
 			<span>Pleinbook</span>
 		</a>
 		<i class="div" aria-hidden="true"></i>
-		<a class="link" href="/docs/">Manual</a>
-		<a class="link" href="/support/">Support</a>
-		<a class="link wide" href="/changelog/">Changelog</a>
-		<i class="div" aria-hidden="true"></i>
-		<button class="icon-btn" type="button" data-theme-toggle aria-label="Switch between light and dark">
-			<Icon name="contrast" size={20} />
-		</button>
+		<a class="link" href="/docs/" {...here('/docs/')}>Manual</a>
+		<a class="link" href="/support/" {...here('/support/')}>Support</a>
+		<a class="link wide" href="/changelog/" {...here('/changelog/')}>Changelog</a>
+		{
+			Astro.slots.has('search') && (
+				<>
+					<i class="div" aria-hidden="true" />
+					<slot name="search" />
+				</>
+			)
+		}
 	</nav>
 	<a class="corner pb-glass" href={store.href} aria-label={store.label} {...(store.external ? { rel: 'noopener' } : {})}>
 		<AppStoreGlyph size={18} />
 		<span>{store.corner}</span>
 	</a>
-</header>
-
-<script>
-	// Light/dark toggle, shared with the manual through Starlight's storage key.
-	const KEY = 'starlight-theme';
-	const root = document.documentElement;
-	const current = () =>
-		root.dataset.theme === 'dark' || root.dataset.theme === 'light'
-			? root.dataset.theme
-			: matchMedia('(prefers-color-scheme: dark)').matches
-				? 'dark'
-				: 'light';
-	for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]')) {
-		btn.addEventListener('click', () => {
-			const next = current() === 'dark' ? 'light' : 'dark';
-			root.dataset.theme = next;
-			try {
-				localStorage.setItem(KEY, next);
-			} catch {}
-		});
-	}
-</script>
+</div>
 
 <style>
 	.nav {
@@ -93,8 +79,7 @@ const store = appStoreLink();
 		margin-inline: 4px;
 		background: var(--pb-rule);
 	}
-	.link,
-	.icon-btn {
+	.link {
 		display: inline-flex;
 		align-items: center;
 		height: 38px;
@@ -109,15 +94,14 @@ const store = appStoreLink();
 		cursor: pointer;
 		transition: background-color 0.15s;
 	}
-	.icon-btn {
-		width: 38px;
-		justify-content: center;
-		padding: 0;
-	}
 	.link:hover,
-	.icon-btn:hover,
 	.home:hover {
 		background: var(--pb-glass-hover);
+	}
+	.link[aria-current='page'] {
+		background: var(--pb-glass-bg-strong);
+		box-shadow: var(--pb-glass-depth);
+		font-weight: 600;
 	}
 	.corner {
 		display: flex;
@@ -156,8 +140,18 @@ const store = appStoreLink();
 		.home span {
 			display: none;
 		}
+		.bar {
+			gap: 2px;
+			padding-inline: 6px;
+		}
+		.home {
+			padding: 6px;
+		}
+		.div {
+			margin-inline: 2px;
+		}
 		.link {
-			padding-inline: 10px;
+			padding-inline: 9px;
 		}
 	}
 </style>

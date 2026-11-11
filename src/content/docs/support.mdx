@@ -1,0 +1,82 @@
+---
+title: Support
+description: Get help with Pleinbook by email or on Discord, with fixes for the most common questions.
+template: splash
+---
+
+import SupportContact from '../../components/SupportContact.astro';
+import BugReportButton from '../../components/BugReportButton.astro';
+import QuickFixes from '../../components/QuickFixes.astro';
+import QuickFix from '../../components/QuickFix.astro';
+
+Stuck, found a bug, or want to show what you've painted? Here's how to get in touch, and quick fixes
+for the things people ask about most.
+
+<SupportContact />
+
+## Quick fixes
+
+<QuickFixes>
+
+<QuickFix q="The Pencil needs pressing too hard, or too lightly">
+
+Open **Settings › Pencil Pressure** and calibrate. It sets how hard you need to press for full
+pressure, so you never have to push harder than is comfortable. You can shape the pressure curve
+there too.
+
+</QuickFix>
+
+<QuickFix q="Double-tap or squeeze isn't doing what I expect">
+
+By default, double-tapping Apple Pencil opens the kit ring, and squeezing Apple Pencil Pro picks up
+the colour under the tip. You can set each one to **Kit ring**, **Pick a colour** or **Nothing** in
+**Settings › Apple Pencil**.
+
+</QuickFix>
+
+<QuickFix q="I don't have an Apple Pencil">
+
+In **Settings › Painting**, set **Paint with** to **Finger**. Pressure then comes from how much of your
+finger touches the glass, which you can calibrate in **Settings › Finger Pressure**.
+
+</QuickFix>
+
+<QuickFix q="I made a mark I didn't mean to">
+
+We believe in a sketchbook being raw and authentic, so undo is off by default, even if that means
+embracing mistakes and accidents. If you'd like a safety net while you learn, turn on **Easy Mode** in
+Settings for a single undo step.
+
+Once you're done painting, remember to lock the page (the padlock in the top bar) so you don't accidentally smudge or paint on it
+later.
+
+</QuickFix>
+
+<QuickFix q="Pleinbook Unlock isn't showing on my other device">
+
+Make sure the device is signed in to the same Apple Account you bought Pleinbook Unlock with, then tap
+**Restore Purchases** in Settings. Pleinbook Unlock belongs to your Apple Account, so it works on all your
+devices.
+
+</QuickFix>
+
+<QuickFix q="iCloud says storage is full">
+
+Your work is safe on your device, and it uploads when there's space. Free up iCloud storage, or add
+more in your device's Settings, and Pleinbook catches up on its own.
+
+</QuickFix>
+
+</QuickFixes>
+
+## Reporting a bug
+
+Email us and include:
+
+- what you were doing, and what went wrong
+- a screenshot or screen recording, if you can
+- your device model and its iPadOS or iOS version (the device's **Settings › General › About**)
+- your Apple Pencil model
+- the brush engine version (Pleinbook **Settings › Diagnostics**)
+
+<BugReportButton />

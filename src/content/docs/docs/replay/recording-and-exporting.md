@@ -14,5 +14,5 @@ TODO: write this page.
 This page should cover:
   - Recording is always on; the video is made when you export
   - Shows the page only, not the scratchpad or interface
-  - HEVC video; part of the unlock
+  - HEVC video; part of Pleinbook Unlock
 -->

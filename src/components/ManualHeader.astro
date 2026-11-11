@@ -1,0 +1,22 @@
+---
+// Replaces Starlight's header on manual, support, privacy and changelog pages with the site's own
+// top bar (SiteNav), so every page has the same floating capsule and corner button. On manual pages,
+// Starlight's search sits at the end of the capsule.
+import Search from '@astrojs/starlight/components/Search.astro';
+import SiteNav from './SiteNav.astro';
+
+// Search belongs to the manual: pages without a sidebar (support, privacy, changelog) don't get it.
+const { hasSidebar } = Astro.locals.starlightRoute;
+---
+
+{
+	hasSidebar ? (
+		<SiteNav>
+			<span slot="search" class="pb-search">
+				<Search />
+			</span>
+		</SiteNav>
+	) : (
+		<SiteNav />
+	)
+}

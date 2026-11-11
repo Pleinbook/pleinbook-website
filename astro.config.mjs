@@ -13,7 +13,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Pleinbook',
-			description: 'A painting sketchbook for iPad: pigment mixing, one layer, no undo.',
+			description: 'A pigment-mixing digital sketchbook: one layer, no undo.',
 			logo: { src: './src/assets/brushmark.svg', alt: '' },
 			// Same share image, home-screen icon and favicon fallback as the homepage.
 			head: [
@@ -27,9 +27,11 @@ export default defineConfig({
 			customCss: ['./src/styles/theme.css', './src/styles/starlight.css'],
 			components: {
 				Footer: './src/components/Footer.astro',
+				Header: './src/components/ManualHeader.astro',
+				ThemeProvider: './src/components/ThemeProvider.astro',
+				MobileMenuFooter: './src/components/MobileMenuFooter.astro',
 			},
-			// TODO: add the Discord invite once it exists.
-			// social: [{ icon: 'discord', label: 'Discord', href: 'https://discord.gg/…' }],
+			social: [{ icon: 'discord', label: 'Discord', href: 'https://discord.gg/ZaW9Auzgbg' }],
 			sidebar: [
 				{ label: 'Manual', link: '/docs/' },
 				section('Getting started', 'getting-started'),

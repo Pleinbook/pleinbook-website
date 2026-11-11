@@ -1,6 +1,7 @@
 ---
 // Shared by the homepage and every manual page.
 import Brushmark from './Brushmark.astro';
+import { contact } from '../data/site';
 const year = new Date().getFullYear();
 ---
 
@@ -10,6 +11,7 @@ const year = new Date().getFullYear();
 		<nav aria-label="Site">
 			<a href="/docs/">Manual</a>
 			<a href="/support/">Support</a>
+			<a href={contact.discord} rel="noopener">Discord</a>
 			<a href="/changelog/">Changelog</a>
 			<a href="/privacy/">Privacy</a>
 		</nav>

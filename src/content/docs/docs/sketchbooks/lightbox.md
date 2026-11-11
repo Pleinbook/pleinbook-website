@@ -10,5 +10,5 @@ TODO: write this page.
 <!--
 This page should cover:
   - Grid of sketchbooks; open one to see its pages
-  - New sketchbook: pixel size (defaults to this iPad's screen), paper
+  - New sketchbook: pixel size (defaults to this device's screen), paper
 -->

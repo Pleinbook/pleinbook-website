@@ -10,7 +10,7 @@ TODO: write this page.
 <!--
 This page should cover:
   - Why no layers / zoom / undo?
-  - Which iPads and Pencils are supported?
+  - Which devices and Pencils are supported?
   - Is there an iPhone version? (later)
-  - What's free and what's in the unlock?
+  - What's free and what's in Pleinbook Unlock?
 -->

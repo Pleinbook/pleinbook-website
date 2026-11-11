@@ -1,0 +1,47 @@
+---
+// Opens an email to support with a bug-report template already filled in.
+import Icon from './Icon.astro';
+import { mailto } from '../data/site';
+
+const body = [
+	'What I was doing:',
+	'',
+	'What went wrong:',
+	'',
+	'Device model and iPadOS or iOS version (Settings › General › About):',
+	'Apple Pencil model:',
+	'Brush engine version (Pleinbook Settings › Diagnostics):',
+	'',
+	'(A screenshot or screen recording helps a lot.)',
+].join('\n');
+---
+
+<a class="pb-bug not-content" href={mailto('Pleinbook bug report', body)}>
+	<Icon name="bug" size={18} /> Email a bug report
+</a>
+
+<style>
+	.pb-bug {
+		display: flex;
+		width: fit-content;
+		align-items: center;
+		gap: 8px;
+		height: 44px;
+		/* Same rhythm as the Markdown around it. */
+		margin-top: 1rem;
+		padding-inline: 18px;
+		border-radius: 999px;
+		background: var(--pb-cta-bg);
+		color: var(--pb-cta-fg);
+		font-size: 15px;
+		font-weight: 600;
+		text-decoration: none;
+		box-shadow:
+			var(--pb-glass-depth),
+			var(--pb-glass-shadow);
+	}
+	.pb-bug:hover {
+		color: var(--pb-cta-fg);
+		transform: translateY(-1px);
+	}
+</style>

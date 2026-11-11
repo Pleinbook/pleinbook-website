@@ -17,6 +17,7 @@
 	--pb-ink-2: #4a4640;
 	--pb-ink-3: #645e55;
 	--pb-rule: rgb(60 50 35 / 0.12);
+	--pb-scroll-thumb: rgb(60 50 35 / 0.3);
 
 	/* Brand: the brushmark gradient, plus a link blue that reads on paper */
 	--pb-brand-blue: #00457f;
@@ -82,6 +83,7 @@
 		--pb-ink-2: #c4bdb1;
 		--pb-ink-3: #a39c90;
 		--pb-rule: rgb(255 245 225 / 0.1);
+		--pb-scroll-thumb: rgb(255 245 225 / 0.26);
 		--pb-link: #7db7ff;
 		--pb-link-hover: #a9d0ff;
 		--pb-glass-bg: rgb(50 47 43 / 0.55);
@@ -115,6 +117,7 @@
 	--pb-ink-2: #c4bdb1;
 	--pb-ink-3: #a39c90;
 	--pb-rule: rgb(255 245 225 / 0.1);
+	--pb-scroll-thumb: rgb(255 245 225 / 0.26);
 	--pb-link: #7db7ff;
 	--pb-link-hover: #a9d0ff;
 	--pb-glass-bg: rgb(50 47 43 / 0.55);
@@ -141,6 +144,19 @@
 }
 
 /* ---- Shared pieces ---- */
+
+/*
+ * Scroll bars: the page's own bar sits on the paper colour with a soft ink thumb, so it reads as part
+ * of the page rather than a white strip down the side. Inner scrolling areas (the manual's sidebar,
+ * the mix picker) get a thin bar with no track. Browsers that use overlay scroll bars keep their own.
+ */
+html {
+	scrollbar-color: var(--pb-scroll-thumb) var(--pb-paper);
+}
+html :where(*) {
+	scrollbar-width: thin;
+	scrollbar-color: var(--pb-scroll-thumb) transparent;
+}
 
 /* Paper ground with grain. */
 .pb-paper {

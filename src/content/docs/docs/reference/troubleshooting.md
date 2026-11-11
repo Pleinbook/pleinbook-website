@@ -10,7 +10,6 @@ TODO: write this page.
 <!--
 This page should cover:
   - Pencil not detected, double-tap not opening the kit ring
-  - Palm touches making marks
   - Import failed or a preset was skipped
   - Sync not catching up
 -->

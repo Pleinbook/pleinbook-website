@@ -1,0 +1,19 @@
+---
+// The foot of the phone menu: just the social links (Discord). No theme picker; the site follows
+// the device's light/dark setting.
+import SocialIcons from '@astrojs/starlight/components/SocialIcons.astro';
+---
+
+<div class="mobile-preferences">
+	<SocialIcons />
+</div>
+
+<style>
+	.mobile-preferences {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+		padding-block: 1rem;
+		border-top: 0.5px solid var(--pb-rule);
+	}
+</style>

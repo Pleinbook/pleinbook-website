@@ -15,22 +15,22 @@ const copy = {
 		button: 'Coming soon',
 		corner: 'Coming soon',
 		label: 'Coming soon to the App Store',
-		heading: 'Coming soon to iPad.',
+		heading: 'Coming to a device near you.',
 		body: 'Pleinbook is in testing now and coming to the App Store soon.',
 	},
 	preorder: {
 		button: 'Pre-order on the App Store',
 		corner: 'Pre-order',
 		label: 'Pre-order Pleinbook on the App Store',
-		heading: 'Coming soon to iPad.',
-		body: 'Pre-order now and Pleinbook downloads to your iPad on launch day. It’s free, and Apple lets you know when it arrives.',
+		heading: 'Coming to a device near you.',
+		body: 'Pre-order now and Pleinbook downloads to your device on launch day. It’s free, and Apple lets you know when it arrives.',
 	},
 	live: {
 		button: 'Download on the App Store',
 		corner: 'Download',
 		label: 'Download Pleinbook on the App Store',
 		heading: 'Paint something today.',
-		body: 'Pleinbook is free on the App Store for iPad.',
+		body: 'Free on the App Store.',
 	},
 } as const;
 
@@ -38,7 +38,19 @@ export function appStoreLink() {
 	const external = appStore.status !== 'soon' && appStore.url !== '';
 	return {
 		...copy[appStore.status],
-		href: external ? appStore.url : '#get',
+		href: external ? appStore.url : '/#get',
 		external,
 	};
+}
+
+/** Contact details, used by the support page, the footer and the manual's header. */
+export const contact = {
+	email: 'support@pleinbook.com',
+	discord: 'https://discord.gg/ZaW9Auzgbg',
+};
+
+/** A mailto: link with a subject and a pre-filled body. */
+export function mailto(subject: string, body = '') {
+	const q = new URLSearchParams({ subject, ...(body ? { body } : {}) }).toString().replace(/\+/g, '%20');
+	return `mailto:${contact.email}?${q}`;
 }

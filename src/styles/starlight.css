@@ -38,9 +38,9 @@ body {
 }
 
 /* ---- Glass recipe (same as .pb-glass in theme.css), applied to Starlight's own elements ---- */
-.header,
 .sidebar-pane,
-.pagination-links a {
+.pagination-links a,
+.sl-menu-button {
 	isolation: isolate;
 	background: var(--pb-glass-bg);
 	-webkit-backdrop-filter: var(--pb-glass-blur);
@@ -54,7 +54,6 @@ body {
 .pagination-links a {
 	position: relative;
 }
-.header::before,
 .sidebar-pane::before,
 .pagination-links a::before {
 	content: '';
@@ -74,44 +73,83 @@ body {
 	pointer-events: none;
 }
 
-/* ---- Header: floating capsule ---- */
+/* ---- Header: the site's own top bar (ManualHeader.astro → SiteNav) ---- */
+/* Starlight's header wrapper is just a holder now: the capsule and corner button carry the glass. */
 header.header {
-	top: 10px;
-	inset-inline: 12px;
+	padding: 0;
+	border: 0;
+	background: none;
+	box-shadow: none;
+	pointer-events: none;
+}
+header.header > * {
+	pointer-events: auto;
+}
+/* Search, inside the capsule: a plain capsule button like the links beside it. */
+.pb-search {
+	display: contents;
+}
+.pb-search site-search > button {
 	width: auto;
-	height: calc(var(--sl-nav-height) - 1.25rem);
-	padding: 0 10px 0 18px;
-	border-radius: 999px;
-}
-.site-title {
-	gap: 10px;
-	color: var(--pb-ink);
-	font-size: 17px;
-	font-weight: 650;
-	letter-spacing: -0.01em;
-}
-.site-title img {
-	width: 26px;
-	height: 26px;
-}
-site-search > button {
+	max-width: none;
 	height: 38px;
+	gap: 6px;
+	padding-inline: 12px;
 	border: 0;
 	border-radius: 999px;
-	background: rgb(120 100 70 / 0.1);
-	color: var(--pb-ink-2);
+	background: transparent;
+	color: var(--pb-ink);
+	font: 500 15px/1 var(--pb-font);
 }
-:root[data-theme='dark'] site-search > button {
-	background: rgb(0 0 0 / 0.25);
-}
-site-search > button:hover {
+.pb-search site-search > button:hover {
+	background: var(--pb-glass-hover);
 	color: var(--pb-ink);
 }
-starlight-theme-select select {
-	border-radius: 999px;
+.pb-search site-search > button kbd {
+	display: none;
+}
+@media (max-width: 720px) {
+	.pb-search site-search > button span {
+		display: none;
+	}
+}
+@media (max-width: 420px) {
+	.pb-search site-search > button {
+		padding-inline: 9px;
+	}
 }
 
-/* ---- Sidebar: floating glass card on wide screens ---- */
+/* Phone menu button (pages with a sidebar): a glass circle in the top-right corner, where the
+   corner button sits on other pages. */
+.sl-menu-button {
+	top: 12px;
+	inset-inline-end: 12px;
+	width: 52px;
+	height: 52px;
+	padding: 15px;
+	border-radius: 50%;
+	color: var(--pb-ink);
+}
+:root[data-theme='light'] .sl-menu-button,
+:root[data-theme='dark'] .sl-menu-button {
+	background: var(--pb-glass-bg);
+	color: var(--pb-ink);
+}
+.sl-menu-button:has(~ :popover-open) {
+	background: var(--pb-glass-bg-strong);
+}
+@media (max-width: 49.999rem) {
+	:root[data-has-sidebar] .nav .corner {
+		display: none;
+	}
+	/* Leave room on the right of the capsule for the menu button. */
+	:root[data-has-sidebar] .nav {
+		padding-inline-end: 64px;
+	}
+}
+
+/* ---- Page width ---- */
+/* Sidebar pages: content starts after the floating sidebar card. */
 @media (min-width: 50rem) {
 	.sidebar-pane {
 		top: calc(var(--sl-nav-height) + 2px);
@@ -125,10 +163,19 @@ starlight-theme-select select {
 	.sidebar-pane .sidebar-content {
 		padding: 14px 12px 16px;
 	}
-	.main-frame {
+	:root[data-has-sidebar] .main-frame {
 		padding-inline-start: calc(var(--sl-sidebar-width) + 8px);
 	}
 }
+/* Pages without a sidebar (support, privacy, changelog): one centred reading column. */
+:root:not([data-has-sidebar]) .main-frame .sl-container {
+	max-width: 46rem;
+	margin-inline: auto;
+}
+:root:not([data-has-sidebar]) .main-frame .content-panel {
+	padding-inline: 16px;
+}
+
 /* Phone menu: the sidebar opens as a solid glass sheet */
 @media (max-width: 49.999rem) {
 	.sidebar-pane {
@@ -228,9 +275,12 @@ h1#_top {
 	letter-spacing: -0.015em;
 }
 .sl-markdown-content h2 {
-	font-size: 28px;
+	font-size: 32px;
 }
-.sl-markdown-content a {
+.sl-markdown-content h3 {
+	font-size: 22px;
+}
+.sl-markdown-content a:not(.not-content, :where(.not-content *)) {
 	color: var(--pb-link);
 	text-underline-offset: 3px;
 }
@@ -263,9 +313,31 @@ h1#_top {
 	letter-spacing: -0.015em;
 }
 
-/* Splash pages (support, privacy, changelog) */
-[data-has-hero] .content-panel,
-.splash .content-panel {
-	max-width: 48rem;
-	margin-inline: auto;
+
+
+/* Heading link icons: keep them on manual pages, hide them on support, privacy and changelog. */
+:root:not([data-has-sidebar]) .sl-anchor-link {
+	display: none;
+}
+
+/*
+ * Space under headings, measured by eye: from the bottom of the heading's letters to the top of what
+ * follows. Headings are trimmed at the baseline (text-box), then text after a heading gets 1.5rem
+ * (its first line adds about 8px above the letters) and a card or button gets 2rem, so both read as
+ * the same 32px gap. The title gets the same treatment, without Starlight's extra panel padding.
+ * Browsers without text-box keep a few pixels more under headings.
+ */
+h1#_top,
+.sl-markdown-content :is(h2, h3, h4),
+.sl-markdown-content .sl-heading-wrapper {
+	text-box: trim-end cap alphabetic;
+}
+.sl-markdown-content > .sl-heading-wrapper + :is(p, ul, ol) {
+	margin-top: 1.5rem;
+}
+.sl-markdown-content > .sl-heading-wrapper + .not-content {
+	margin-top: 2rem;
+}
+.content-panel:has(h1#_top) {
+	padding-bottom: 0;
 }

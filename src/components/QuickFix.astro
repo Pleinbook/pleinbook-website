@@ -1,0 +1,79 @@
+---
+// One collapsible question in a QuickFixes card. The answer is the Markdown inside it.
+import Icon from './Icon.astro';
+interface Props {
+	q: string;
+	/** Anchor for linking straight to this answer; defaults to the question, slugified. */
+	id?: string;
+}
+const { q, id } = Astro.props;
+const slug =
+	id ??
+	q
+		.toLowerCase()
+		.replace(/['’]/g, '')
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-|-$/g, '');
+---
+
+<details id={slug}>
+	<summary>
+		<span>{q}</span>
+		<Icon name="chevron-down" size={20} class="chev" />
+	</summary>
+	<div class="answer"><slot /></div>
+</details>
+
+<style>
+	details + details {
+		border-top: 0.5px solid var(--pb-rule);
+	}
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 18px 20px;
+		color: var(--pb-ink);
+		font-size: 17px;
+		font-weight: 600;
+		line-height: 1.35;
+		list-style: none;
+		cursor: pointer;
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	summary:hover span {
+		color: var(--pb-link);
+	}
+	summary :global(.chev) {
+		flex: none;
+		color: var(--pb-ink-3);
+		transition: transform 0.2s;
+	}
+	details[open] summary :global(.chev) {
+		transform: rotate(180deg);
+	}
+	summary:focus-visible {
+		outline: 2px solid var(--pb-focus);
+		outline-offset: -2px;
+		border-radius: 12px;
+	}
+	.answer {
+		padding: 0 20px 20px;
+		color: var(--pb-ink-2);
+		font-size: 16px;
+		line-height: 1.6;
+	}
+	.answer :global(p) {
+		margin: 0;
+	}
+	.answer :global(p + p) {
+		margin-top: 0.75em;
+	}
+	.answer :global(strong) {
+		color: var(--pb-ink);
+		font-weight: 600;
+	}
+</style>

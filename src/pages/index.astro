@@ -12,9 +12,9 @@ import { mixes } from '../data/mixes';
 import { appStoreLink } from '../data/site';
 import { strokes, SWATCHES } from '../data/strokes';
 
-const title = 'Pleinbook: a painting sketchbook for iPad';
+const title = 'Pleinbook: a pigment-mixing digital sketchbook';
 const description =
-	'Paint it once, mix your colours, turn the page. Pleinbook is an iPad sketchbook with paint that mixes like pigment, one layer and no undo.';
+	'Paint it once, mix your colours, turn the page. Pleinbook is a painting sketchbook for iPad and iPhone, with paint that mixes like pigment, one layer and no undo.';
 
 const rail = [
 	{ id: 'mixing', icon: 'palette', label: 'Mixing' },
@@ -59,30 +59,19 @@ const traits = [
 		<meta property="og:image:alt" content="Pleinbook: Paint it once. Mix your colours. Turn the page." />
 		<meta name="twitter:card" content="summary_large_image" />
 		<script is:inline>
-			// Always set data-theme (as Starlight does), so dark-only colours apply when the device is in dark
-			// mode, not only when someone has picked dark with the toggle.
+			// Follow the device's light/dark setting (there is no theme switch), live.
 			(() => {
-				let t = null;
-				try {
-					t = localStorage.getItem('starlight-theme');
-				} catch {}
 				const mq = matchMedia('(prefers-color-scheme: dark)');
-				const apply = () => {
-					document.documentElement.dataset.theme =
-						t === 'light' || t === 'dark' ? t : mq.matches ? 'dark' : 'light';
-				};
+				const apply = () => (document.documentElement.dataset.theme = mq.matches ? 'dark' : 'light');
 				apply();
-				mq.addEventListener('change', () => {
-					try {
-						t = localStorage.getItem('starlight-theme');
-					} catch {}
-					apply();
-				});
+				mq.addEventListener('change', apply);
 			})();
 		</script>
 	</head>
 	<body class="pb-paper">
-		<SiteNav />
+		<header>
+			<SiteNav />
+		</header>
 
 		<nav class="rail pb-glass" aria-label="Sections">
 			{
@@ -97,7 +86,7 @@ const traits = [
 		<main>
 			<!-- Hero -->
 			<section class="hero" id="top">
-				<p class="chip pb-glass"><Brushmark size={18} /> Your sketchbook for iPad · coming soon</p>
+				<p class="chip pb-glass"><Brushmark size={18} /> Your sketchbook · coming soon</p>
 				<h1>
 					Paint it once.<br />
 					<span class="painted">Mix your colours.</span><br />
@@ -200,7 +189,7 @@ const traits = [
 						<span class="glyph"><Icon name="tablet" size={24} /></span>
 						<h3>Fixed to the glass</h3>
 						<p>
-							No zoom, pan or rotate. The whole page is always in view. Turn the iPad like a traditional sketchbook.
+							No zoom, pan or rotate. The whole page is always in view. Turn your device like a traditional sketchbook.
 						</p>
 					</article>
 					<article class="tile pb-glass">
@@ -960,7 +949,7 @@ const traits = [
 		color: var(--pb-ink-3);
 		font-size: 15px;
 	}
-	/* The unlock card: the same glass, tinted an even wash of the brushmark's teal (no gradient across the face). */
+	/* The Pleinbook Unlock card: the same glass, tinted an even wash of the brushmark's teal (no gradient across the face). */
 	.featured {
 		--tint: rgb(42 121 118 / 0.13);
 		background: linear-gradient(var(--tint), var(--tint)), var(--pb-glass-bg);

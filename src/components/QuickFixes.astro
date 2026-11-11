@@ -1,0 +1,31 @@
+---
+// A grouped list of collapsible questions (QuickFix rows), as one glass card.
+// Linking to /support/#<question-id> opens that answer.
+---
+
+<div class="pb-fixes pb-glass not-content">
+	<slot />
+</div>
+
+<script>
+	function openFromHash() {
+		const id = decodeURIComponent(location.hash.slice(1));
+		if (!id) return;
+		const el = document.getElementById(id);
+		if (el instanceof HTMLDetailsElement && el.closest('.pb-fixes')) {
+			el.open = true;
+			el.scrollIntoView({ block: 'center' });
+		}
+	}
+	openFromHash();
+	addEventListener('hashchange', openFromHash);
+</script>
+
+<style>
+	.pb-fixes {
+		/* Same rhythm as the Markdown around it: 1rem above, nothing extra below. */
+		margin-block: 1rem 0;
+		padding-inline: 4px;
+		border-radius: var(--pb-radius);
+	}
+</style>

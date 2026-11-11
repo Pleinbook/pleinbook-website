@@ -10,5 +10,5 @@ TODO: write this page.
 <!--
 This page should cover:
   - One finger paints (contact size stands in for pressure), two fingers smudge, hold to eyedrop
-  - Tuned finger-only mode is on hold until after the iPad launch; check before publishing
+  - Finger-only mode tuned for iPhone is planned for launch; check its status before publishing
 -->

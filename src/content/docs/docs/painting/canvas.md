@@ -10,7 +10,7 @@ TODO: write this page.
 <!--
 This page should cover:
   - Fit, never zoom: the whole page is always on screen
-  - Locked to the glass: rotate the iPad and the interface turns but the painting doesn't move
+  - Locked to the glass: rotate the device and the interface turns but the painting doesn't move
   - Panels fade out while the Pencil paints near them and come back when it lifts
-  - Books made on a bigger iPad scale down to fit a smaller one
+  - Books made on a bigger screen scale down to fit a smaller one (iPad to iPhone, too)
 -->
