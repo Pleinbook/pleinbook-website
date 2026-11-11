@@ -182,6 +182,26 @@ html :where(*) {
 }
 
 /*
+ * Paper past the page's ends. iPadOS and iOS let a page bounce beyond its top and bottom, and Safari
+ * fills the gap with the background colour alone, so the grain stopped at the edge. The root keeps
+ * the paper colour; behind the body, a layer of grained paper is fixed to the window and runs half a
+ * screen past it either way, so a bounce shows paper. The body's own grain still scrolls with the page
+ * on top of it (a body background is painted above negative z-index layers).
+ */
+html {
+	background-color: var(--pb-paper);
+}
+body::before {
+	content: '';
+	position: fixed;
+	inset: -50vh 0;
+	z-index: -1;
+	background-color: var(--pb-paper);
+	background-image: var(--pb-grain);
+	pointer-events: none;
+}
+
+/*
  * Glass: a flat slab, not a pill. An even translucent tint over a blur, a bevelled rim of light
  * (::before, brightest at the top-left and bottom-right corners), a faint inner light and shade just
  * inside the rim, and a soft drop shadow. No gradient across the face, so it doesn't read as curved.
