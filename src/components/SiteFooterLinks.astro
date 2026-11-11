@@ -3,16 +3,18 @@
 import Brushmark from './Brushmark.astro';
 import { contact } from '../data/site';
 import { publishedReleases } from '../data/changelog';
+import { manualIsLive } from '../data/manual';
 const year = new Date().getFullYear();
 // Changelog appears once the first release is published (src/changelog/).
 const showChangelog = (await publishedReleases()).length > 0;
+const showManual = await manualIsLive();
 ---
 
 <div class="pb-footer">
 	<div class="row">
 		<a class="mark" href="/" aria-label="Pleinbook home"><Brushmark size={22} /> Pleinbook</a>
 		<nav aria-label="Site">
-			<a href="/docs/">Manual</a>
+			{showManual && <a href="/docs/">Manual</a>}
 			<a href="/support/">Support</a>
 			<a href={contact.discord} rel="noopener">Discord</a>
 			{showChangelog && <a href="/changelog/">Changelog</a>}

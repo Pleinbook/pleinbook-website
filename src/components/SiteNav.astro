@@ -7,9 +7,12 @@ import Brushmark from './Brushmark.astro';
 import AppStoreGlyph from './AppStoreGlyph.astro';
 import { appStoreLink } from '../data/site';
 import { publishedReleases } from '../data/changelog';
+import { manualIsLive } from '../data/manual';
 const store = appStoreLink();
 // Changelog appears once the first release is published (src/changelog/).
 const showChangelog = (await publishedReleases()).length > 0;
+// The manual link appears once the manual is published.
+const showManual = await manualIsLive();
 const path = Astro.url.pathname;
 const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'page' as const } : {});
 ---
@@ -21,7 +24,7 @@ const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'p
 			<span>Pleinbook</span>
 		</a>
 		<i class="div" aria-hidden="true"></i>
-		<a class="link" href="/docs/" {...here('/docs/')}>Manual</a>
+		{showManual && <a class="link" href="/docs/" {...here('/docs/')}>Manual</a>}
 		<a class="link" href="/support/" {...here('/support/')}>Support</a>
 		{showChangelog && (
 			<a class="link wide" href="/changelog/" {...here('/changelog/')}>

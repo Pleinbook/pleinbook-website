@@ -10,6 +10,7 @@ import Icon from '../components/Icon.astro';
 import AppStoreGlyph from '../components/AppStoreGlyph.astro';
 import { mixes } from '../data/mixes';
 import { appStoreLink } from '../data/site';
+import { manualIsLive } from '../data/manual';
 import { strokes, SWATCHES } from '../data/strokes';
 
 const title = 'Pleinbook: a pigment-mixing digital sketchbook';
@@ -34,6 +35,8 @@ const traits = [
 	{ icon: 'search', label: 'No zoom or pan', slash: 'up' as const },
 ];
 
+// Links into the manual appear once it's published (until then they'd lead to a 404).
+const manualLive = await manualIsLive();
 ---
 
 <!doctype html>
@@ -110,7 +113,7 @@ const traits = [
 				</ul>
 				<div class="ctas">
 					<a class="btn primary" href={store.href} aria-label={store.label} {...(store.external ? { rel: 'noopener' } : {})}><AppStoreGlyph size={20} /> {store.button}</a>
-					<a class="btn pb-glass" href="/docs/">Read the manual <Icon name="arrow-right" size={18} /></a>
+					{manualLive && <a class="btn pb-glass" href="/docs/">Read the manual <Icon name="arrow-right" size={18} /></a>}
 				</div>
 			</section>
 
@@ -203,7 +206,7 @@ const traits = [
 					</article>
 				</div>
 				<p class="aside">
-					Want a safety net while you learn? <a href="/docs/getting-started/#no-undo-and-easy-mode">Easy Mode</a> adds a single
+					Want a safety net while you learn? {manualLive ? <a href="/docs/getting-started/#no-undo-and-easy-mode">Easy Mode</a> : 'Easy Mode'} adds a single
 					undo step.
 				</p>
 			</section>
@@ -244,8 +247,8 @@ const traits = [
 					<KitRing />
 				</div>
 				<p class="aside">
-					Imports Krita brush bundles and Photoshop brush tips, and exports brushes back as Krita bundles.{' '}
-					<a href="/docs/krita-compatibility/">What carries over</a>
+					Imports Krita brush bundles and Photoshop brush tips, and exports brushes back as Krita bundles.
+					{manualLive && <>{' '}<a href="/docs/krita-compatibility/">What carries over</a></>}
 				</p>
 			</section>
 

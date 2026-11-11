@@ -1,5 +1,16 @@
 // The manual's pages and their sections, for the left panel (ManualSidebar.astro).
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
+
+/**
+ * Whether the manual is out: its front page (src/content/docs/docs/index.mdx) isn't a draft. Until
+ * then, links into the manual from the rest of the site are left out (they'd lead to a 404). Always
+ * true in `npm run dev`, where the drafts show.
+ */
+export async function manualIsLive(): Promise<boolean> {
+	if (import.meta.env.DEV) return true;
+	const front = await getEntry('docs', 'docs');
+	return !!front && !front.data.draft;
+}
 
 export interface ManualPage {
 	id: string;

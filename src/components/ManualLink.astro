@@ -1,0 +1,14 @@
+---
+// A pointer into the manual from outside it (e.g. "See Krita compatibility." on the support page).
+// Left out entirely until the manual is published (src/data/manual.ts › manualIsLive), so live pages
+// never link to a draft.
+import { manualIsLive } from '../data/manual';
+
+interface Props {
+	href: string;
+}
+const { href } = Astro.props;
+const live = await manualIsLive();
+---
+
+{live && <a href={href}><slot /></a>}
