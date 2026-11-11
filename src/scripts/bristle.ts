@@ -67,27 +67,36 @@ function paint(ctx: CanvasRenderingContext2D, w: number, h: number, s: PaintStro
 		const alpha = (0.55 + rand() * 0.4) * (s.opacity ?? 1);
 		const shade = (rand() - 0.5) * 0.14 + (s.tone ?? 0);
 		const wobble = rand() * 6.28;
+		// One stroke per bristle, coloured from the middle of its stretch of the ladder (a bristle
+		// spans only a little of it, so the colour barely changes along it). Gaps where the paint runs
+		// out are pen lifts within the same path. Stroking each short piece separately looked much the
+		// same but cost tens of thousands of draw calls per strip, which Safari takes seconds over.
+		const mid = (t0 + t1) / 2;
+		const c = colourAt(ladder, r0 + (r1 - r0) * mid).map((v) => Math.round(Math.min(255, Math.max(0, v * (1 + shade)))));
+		ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},${alpha * 0.95})`;
+		ctx.lineWidth = lw * 0.92;
+		ctx.beginPath();
+		let pen = false;
 		for (let i = Math.floor(t0 * STEPS); i < Math.floor(t1 * STEPS); i += CHUNK) {
 			const t = i / STEPS;
 			// paint runs out: gaps appear towards the end, more at the edges
 			const gapChance = Math.max(0, (t - (1 - dry * 0.5)) * 2.2) * (0.4 + edge);
-			if (rand() < gapChance) continue;
-			const press = Math.min(1, t / 0.06) ** 0.5 * Math.min(1, (1 - t) / 0.12) ** 0.6;
-			const c = colourAt(ladder, r0 + (r1 - r0) * clamp01(t + (rand() - 0.5) * 0.02)).map((v) =>
-				Math.round(Math.min(255, Math.max(0, v * (1 + shade)))),
-			);
-			ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},${alpha * (0.75 + 0.25 * press)})`;
-			ctx.lineWidth = lw * (0.6 + 0.4 * press);
-			ctx.beginPath();
+			if (rand() < gapChance) {
+				pen = false;
+				continue;
+			}
 			for (let j = i; j <= Math.min(i + CHUNK, STEPS); j++) {
 				const tj = j / STEPS;
 				const pj = Math.min(1, tj / 0.06) ** 0.5 * Math.min(1, (1 - tj) / 0.12) ** 0.6;
 				const off = o * half * (0.35 + 0.65 * pj) + Math.sin(tj * 9 + wobble) * half * 0.03;
 				const x = pts[j][0] + normals[j][0] * off, y = pts[j][1] + normals[j][1] * off;
-				j === i ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+				if (!pen) {
+					ctx.moveTo(x, y);
+					pen = true;
+				} else ctx.lineTo(x, y);
 			}
-			ctx.stroke();
 		}
+		ctx.stroke();
 	}
 }
 
@@ -140,31 +149,61 @@ function mixStrokes(colors: string[], seed: number, aspect: number): PaintStroke
 	return dabs;
 }
 
-function render(root: ParentNode = document) {
-	for (const cv of root.querySelectorAll<HTMLCanvasElement>('canvas[data-strokes], canvas[data-mix]')) {
-		const r = cv.getBoundingClientRect();
-		if (!r.width) continue; // hidden: painted when shown (paintWithin)
-		if (cv.dataset.paintedW === String(Math.round(r.width))) continue;
-		cv.dataset.paintedW = String(Math.round(r.width));
-		const dpr = Math.min(2, window.devicePixelRatio || 1);
-		cv.width = Math.round(r.width * dpr);
-		cv.height = Math.round(r.height * dpr);
-		const ctx = cv.getContext('2d')!;
-		ctx.scale(dpr, dpr);
-		let strokes: PaintStroke[];
-		if (cv.dataset.mix) {
-			const { colors, seed } = JSON.parse(cv.dataset.mix) as { colors: string[]; seed: number };
-			strokes = mixStrokes(colors, seed, r.width / r.height);
-		} else {
-			strokes = JSON.parse(cv.dataset.strokes!) as PaintStroke[];
-		}
-		for (const s of strokes) paint(ctx, r.width, r.height, s);
+/** Paints one canvas at its current size, unless it's already painted at that size. */
+function paintCanvas(cv: HTMLCanvasElement) {
+	const r = cv.getBoundingClientRect();
+	if (!r.width) return; // not laid out (display: none)
+	if (cv.dataset.paintedW === String(Math.round(r.width))) return;
+	cv.dataset.paintedW = String(Math.round(r.width));
+	const dpr = Math.min(2, window.devicePixelRatio || 1);
+	cv.width = Math.round(r.width * dpr);
+	cv.height = Math.round(r.height * dpr);
+	const ctx = cv.getContext('2d')!;
+	ctx.scale(dpr, dpr);
+	let strokes: PaintStroke[];
+	if (cv.dataset.mix) {
+		const { colors, seed } = JSON.parse(cv.dataset.mix) as { colors: string[]; seed: number };
+		strokes = mixStrokes(colors, seed, r.width / r.height);
+	} else {
+		strokes = JSON.parse(cv.dataset.strokes!) as PaintStroke[];
+	}
+	for (const s of strokes) paint(ctx, r.width, r.height, s);
+}
+
+const canvases = (root: ParentNode = document) =>
+	[...root.querySelectorAll<HTMLCanvasElement>('canvas[data-strokes], canvas[data-mix]')];
+// Canvases in a hidden panel (the mix picker's other mixes) are still laid out, just invisible.
+const isHidden = (cv: HTMLCanvasElement) => !!cv.closest('[hidden]');
+
+// Hidden canvases are painted one at a time while the page is idle, so showing one later is instant
+// and the page never stalls painting them all at once.
+let queue: HTMLCanvasElement[] = [];
+let scheduled = false;
+const idle = (fn: () => void) =>
+	'requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1000 }) : setTimeout(fn, 60);
+function drain() {
+	scheduled = false;
+	const cv = queue.shift();
+	if (!cv) return;
+	paintCanvas(cv);
+	if (queue.length) {
+		scheduled = true;
+		idle(drain);
+	}
+}
+function render() {
+	const all = canvases();
+	for (const cv of all) if (!isHidden(cv)) paintCanvas(cv);
+	queue = all.filter(isHidden);
+	if (queue.length && !scheduled) {
+		scheduled = true;
+		idle(drain);
 	}
 }
 
-/** Paint canvases inside an element that has just been shown. */
+/** Paint canvases inside an element that has just been shown (if the idle queue hasn't yet). */
 export function paintWithin(el: ParentNode) {
-	render(el);
+	for (const cv of canvases(el)) paintCanvas(cv);
 }
 
 let started = false;

@@ -17,7 +17,8 @@ does move, and who handles it.
 - We don't collect any data in the app. On the App Store, Pleinbook is labelled **Data Not
   Collected**.
 - If you email us, we use what you send only to respond.
-- This website uses no cookies and no analytics.
+- This website has no analytics or tracking. The only cookie is a security check from our host,
+  Cloudflare.
 
 ## Your paintings and settings
 
@@ -65,13 +66,15 @@ anything you post there.
 
 ## This website
 
-pleinbook.com is a set of static pages hosted by Cloudflare. It sets no cookies, runs no analytics or
-tracking, and loads nothing from other companies. Even the fonts are served from this site.
+pleinbook.com is a set of static pages hosted by Cloudflare. It runs no analytics or tracking, sets
+no cookies of its own, and loads nothing from other companies. Even the fonts are served from this
+site.
 
-Like any web host, Cloudflare processes your IP address to deliver the pages and protect the site
-from attacks. See [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/). The manual
-remembers which sidebar sections you've opened, in your browser's session storage. That stays on
-your device and clears when you close the tab.
+Our host, Cloudflare, may check that you're a person rather than an automated bot, and remember the
+result in a security cookie (`cf_clearance`). It isn't used for tracking or
+advertising, and it expires on its own. See Cloudflare's
+[privacy policy](https://www.cloudflare.com/privacypolicy/) and
+[cookie policy](https://www.cloudflare.com/cookie-policy/).
 
 ## Minors
 
