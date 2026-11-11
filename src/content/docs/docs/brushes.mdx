@@ -1,0 +1,104 @@
+---
+title: Brushes and kits
+description: The brush library, kits and the kit ring, and the brush editor.
+sidebar:
+  order: 4
+draft: true
+---
+
+import SearchTerms from '../../../components/SearchTerms.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import BrushesLibrary from '../../../assets/manual/brushes-library.webp';
+import BrushesKitRing from '../../../assets/manual/brushes-kit-ring.webp';
+import BrushesEditor from '../../../assets/manual/brushes-editor.webp';
+import BrushesEditorCurve from '../../../assets/manual/brushes-editor-curve.webp';
+
+## The brush library
+
+<SearchTerms terms="brushes, library, choose brush, presets, groups, search brushes, new brush, duplicate brush, icon" />
+
+Tap the brush at the top of the tool rail to open the library. Tap a brush to paint with it.
+
+<Screenshot src={BrushesLibrary} alt="The brush library: the kit along the top, a filter by kind, Recent brushes and the Starter brushes as stroke previews." caption="The brush library, with the current kit at the top." />
+
+- **Filter** by kind (Dry, Wet, Lasso, Erasers) or search by name, group or the bundle it came from.
+- **Recent** shows the last brushes you picked. Your own brushes are under **Mine**, the built-in
+  ones under **Starter**, and imported bundles get their own groups.
+- **Grid or list:** switch with the toolbar button.
+- **New Brush** makes a Dry or Wet brush and opens it in the editor.
+- **Import** brings in Krita bundles, presets and Photoshop brush tips. See
+  [Import and export](/docs/import-and-export/#krita-brush-bundles).
+
+Long-press a brush for more:
+
+| Option | What it does |
+| --- | --- |
+| Add to Kit | Puts it in a slot of the current kit. |
+| Assign to Finger | Makes it the brush your finger uses when you paint with Apple Pencil. |
+| Add to Group | Files it in a group, or makes a new one. |
+| Edit | Opens it in the brush editor. |
+| Change Icon… | Draw an icon, or use a shape or a picture. |
+| Duplicate | Makes a copy to change. |
+| Hide from Library | Keeps it out of sight without deleting it. |
+| Delete… | Removes it. Built-in brushes can be restored from **Settings › Resources › Brushes**. |
+
+## Kits and the kit ring
+
+<SearchTerms terms="kit, kit ring, favourite brushes, quick brushes, double tap, radial menu, brush wheel" />
+
+A kit is eight brushes you keep close. They sit in a ring around your Pencil tip, at fixed compass
+points, so your hand learns where each one is.
+
+<Screenshot src={BrushesKitRing} alt="The kit ring open over a dark painting: eight brushes around a colour wheel, with value check, eyedropper and mirror below." caption="The kit ring: eight brushes, a colour wheel and three buttons." />
+
+**Open the kit ring** by double-tapping Apple Pencil, or tap the ring button at the bottom of the
+tool rail. The ring opens where the Pencil is. In it:
+
+- **Eight brushes** around the edge. Tap one to paint with it.
+- **A colour wheel** in the middle. Drag to change colour.
+- **Three buttons** below: value check, eyedropper and mirror.
+
+Touch anywhere outside the ring to close it.
+
+**Make your own kits** at the top of the brush library. The kit menu switches between your saved
+kits, **Recent Brushes** (the last eight you picked) or a **Group** (its first eight). **New Kit**
+starts an empty one: drag brushes onto its slots, or long-press a brush and choose **Add to Kit**.
+
+The same kit sits on the [scratchpad's](/docs/colour/#the-scratchpad) bar.
+
+## The brush editor
+
+<SearchTerms terms="brush settings, edit brush, customise, tip, spacing, pressure curve, tilt, sensors, dynamics, texture" />
+
+Tap the dial on the tool rail to edit the current brush. Changes apply as you make them, so you can
+paint with them straight away, and try them on the scribble pad at the top.
+
+<Screenshot src={BrushesEditor} alt="The brush editor showing the Brush Tip page: tip shapes, diameter, angle and fade, with the option pages down the left." caption="The brush editor, on the Brush Tip page." />
+
+Your changes are kept as a working copy until you decide:
+
+- **Overwrite** saves them into the brush.
+- **Save as New** makes a new brush and leaves the original as it was.
+- **Revert** throws them away.
+
+A dot in the library marks a brush with unsaved changes.
+
+At the top: the brush's name and icon, its kind (**Dry**, **Wet** or **Lasso**), and quick
+**Size**, **Opacity** and **Flow** sliders. Down the side, the brush's pages:
+
+- **Tip:** the brush tip (round, soft, flat, chisel, a bitmap of your own…), spacing and shape.
+- **Dynamics:** opacity, flow, size, rotation, softness and scatter.
+- **Colour:** hue, saturation and value changes, and colour jitter per dab or per stroke.
+- **Texture** and **Tooth:** a texture in the stroke, and how much the paper's grain catches light
+  strokes.
+- **Smudge** (Wet brushes): how far paint is dragged, how much colour the brush adds, and paint
+  thickness.
+- **Fill** (Lasso brushes): flat or gradient, and edge softness.
+
+Most pages can be driven by the Pencil through **sensors**: pressure, tilt, its direction and
+angle, barrel roll, speed, drawing angle, and fade, distance and time along the stroke. Tick a
+sensor and shape its curve. Drag a point to move it, touch the graph to add one, and double-tap a
+point to remove it.
+
+
+<Screenshot src={BrushesEditorCurve} alt="The brush editor's Opacity page, with Pressure ticked and its curve shown." caption="Pressure driving opacity, through a curve." />

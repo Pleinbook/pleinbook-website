@@ -54,6 +54,9 @@ const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'p
 		justify-content: space-between;
 		gap: 12px;
 		pointer-events: none;
+		/* The name beside the brushmark goes when the row runs out of room (see the container query
+		   below), whatever else shares the row: the corner button, or the manual's menu button. */
+		container-type: inline-size;
 	}
 	.nav > * {
 		pointer-events: auto;
@@ -126,6 +129,14 @@ const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'p
 		background: var(--pb-glass-bg-strong);
 	}
 
+	@container (max-width: 400px) {
+		.home span {
+			display: none;
+		}
+		.home {
+			padding: 6px;
+		}
+	}
 	@media (max-width: 720px) {
 		.wide {
 			display: none;
@@ -144,9 +155,6 @@ const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'p
 			top: 8px;
 			inset-inline: 8px;
 		}
-		.home span {
-			display: none;
-		}
 		.bar {
 			gap: 2px;
 			padding-inline: 6px;
@@ -159,6 +167,13 @@ const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'p
 		}
 		.link {
 			padding-inline: 9px;
+		}
+	}
+	/* The narrowest phones (320 pt) with the manual's menu button: tighten the links a little
+	   (after the 420 px rule, which it overrides). */
+	@container (max-width: 260px) {
+		.link {
+			padding-inline: 7px;
 		}
 	}
 </style>

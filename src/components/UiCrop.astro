@@ -1,0 +1,73 @@
+---
+// A crop of part of the app's interface, as a visual key for the table that follows it.
+// - Default: a wide strip (the top bar) shown full width above the slot.
+// - `side`: a tall, narrow strip (the tool rail) in a column to the left of the slot, when the
+//   content column is wide enough; on narrow screens it sits centred above.
+// Crops come from the app repo's UITests/ManualScreenshotTests.swift shots, at 2× (iPad mini).
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+	src: ImageMetadata;
+	alt: string;
+	side?: boolean;
+}
+const { src, alt, side = false } = Astro.props;
+// Shown at the iPad's own size in points: half the 2× pixel width.
+const width = Math.round(src.width / 2);
+---
+
+<div class="pb-crop">
+<div class:list={['pb-crop-inner', { 'pb-crop--side': side }]}>
+	<Image
+		class="pb-crop-img"
+		src={src}
+		alt={alt}
+		width={width}
+		widths={[width, src.width]}
+		sizes={`(min-width: ${width}px) ${width}px, 100vw`}
+	/>
+	<div class="pb-crop-body"><slot /></div>
+</div>
+</div>
+
+<style>
+	.pb-crop {
+		container-type: inline-size;
+	}
+	.pb-crop :global(.pb-crop-img) {
+		display: block;
+		max-width: 100%;
+		height: auto;
+		border-radius: 14px;
+		box-shadow:
+			0 0 0 0.5px var(--pb-glass-edge),
+			var(--pb-glass-shadow);
+	}
+	.pb-crop-body > :global(:first-child) {
+		margin-top: 1.25rem;
+	}
+
+	/* Narrow screens: the rail crop sits centred above its table, not too tall. */
+	.pb-crop--side :global(.pb-crop-img) {
+		margin-inline: auto;
+		max-height: 22rem;
+		width: auto;
+	}
+
+	@container (min-width: 32rem) {
+		.pb-crop--side {
+			display: grid;
+			grid-template-columns: auto minmax(0, 1fr);
+			gap: 1.25rem;
+			align-items: start;
+		}
+		.pb-crop--side :global(.pb-crop-img) {
+			max-height: none;
+			margin: 0;
+		}
+		.pb-crop--side .pb-crop-body > :global(:first-child) {
+			margin-top: 0;
+		}
+	}
+</style>

@@ -1,0 +1,107 @@
+---
+title: Painting
+description: The page, paper, the three kinds of brush, erasing and Lasso fills.
+sidebar:
+  order: 2
+draft: true
+---
+
+import SearchTerms from '../../../components/SearchTerms.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import ShotRow from '../../../components/ShotRow.astro';
+import PaintingPaper from '../../../assets/manual/painting-paper.webp';
+import PaintingDry from '../../../assets/manual/painting-dry.webp';
+import PaintingWet from '../../../assets/manual/painting-wet.webp';
+import PaintingLasso from '../../../assets/manual/painting-lasso.webp';
+
+## The page
+
+<SearchTerms terms="canvas, zoom, pan, rotate, orientation, fit, screen, layers, one layer" />
+
+A Pleinbook page is one layer of paint on paper, and it's always shown whole. There's no zoom, pan
+or rotate: to see the page differently, move the device.
+
+The page is fixed to the glass. Turn the device and the controls turn to stay upright, but the
+painting doesn't move. Your brush tips turn with the controls, so they keep their angle to you.
+
+A sketchbook's pages are all one size, set when you [make the sketchbook](/docs/sketchbooks/#making-a-sketchbook).
+At the default size, one pixel of the page is one pixel of the screen. A bigger page is scaled down
+to fit, never cropped.
+
+Paint never dries. Everything on the page stays wet, so you can keep blending into it for as long as
+the page exists.
+
+## Paper
+
+<SearchTerms terms="paper colour, toned paper, grain, texture, tooth, background, cold press, rough, smooth" />
+
+Paint sits on paper: a colour and, optionally, a grain. Each sketchbook has its own paper, and any
+page can override it: long-press the page in its sketchbook and choose **Paper…**.
+
+Pick a colour, a grain, and how deep and large the grain is. **Use the sketchbook's paper** removes
+the override.
+
+<Screenshot src={PaintingPaper} alt="The Paper for this page sheet: the paper colour, a row of textures with Rough selected, and the Depth and Scale sliders." caption="A page's paper, with the Rough grain." />
+
+Paint mixes with the paper beneath it, so a thin glaze over toned paper looks like a glaze, not a
+tint laid on top. Brushes with tooth leave light strokes on the tops of the grain, as real paper
+does.
+
+Changing a page's paper replaces it, including any adjustments made to it. Premium papers come with
+[Pleinbook Unlock](/docs/pleinbook-unlock/#premium-covers-and-papers).
+
+## Dry, Wet and Lasso brushes
+
+<SearchTerms terms="brush types, engines, stamping, smudge brush, blender, fill tool, paint brush" />
+
+Pleinbook has three kinds of brush:
+
+- **Dry** brushes lay paint down, dab by dab: pencils, inks, gouache, bristle and textured brushes.
+- **Wet** brushes pick up the paint already on the page and drag it, mixing as they go. Blenders and
+  loaded brushes are Wet.
+- **Lasso** brushes fill the shape you draw. See [Lasso fills](#lasso-fills).
+
+<ShotRow
+	items={[
+		{ src: PaintingDry, label: 'Dry', alt: 'Yellow strokes laid over blue ones with a Dry brush: the yellow sits on top, turning green only where it is thin.' },
+		{ src: PaintingWet, label: 'Wet', alt: 'Yellow dragged over blue with a Wet brush: the blue is pulled along and blends into green.' },
+		{ src: PaintingLasso, label: 'Lasso', alt: 'A yellow Lasso shape drawn over a blue one: the overlap mixes to green.' },
+	]}
+	caption="The same yellow over blue with each kind of brush."
+/>
+
+All three mix colour as pigment. Every brush can be [taken apart in the brush editor](/docs/brushes/#the-brush-editor),
+and you can change a brush's kind there too.
+
+## Erasing
+
+<SearchTerms terms="eraser, rubber, remove paint, delete marks, clear" />
+
+The eraser is a brush like any other: it's in the default kit, and you can leave it out of your
+kits if you prefer. It removes paint down to the paper and never removes the paper itself.
+
+Any Dry or Lasso brush can erase: open it in the brush editor and set **Opacity › Blend** to
+**Erase**. The Lasso Eraser clears a whole shape at once.
+
+## Lasso fills
+
+<SearchTerms terms="fill, fill tool, shape, lasso, gradient fill, flat fill, bucket" />
+
+Choose a Lasso brush and draw a shape. It fills as you draw, with the closing edge running straight
+from your pen back to where you started, and the fill goes down when you lift.
+
+Anything inside the shape is filled, even where your line crosses itself, so you never get holes.
+
+The starter Lasso brushes show what fills can do:
+
+- **Lasso Fill**: a flat, solid fill.
+- **Lasso Glaze**: a thin, soft-edged glaze.
+- **Lasso Gradient** and **Lasso Glow**: fills that fade, along the line you draw or out from where
+  you started.
+- **Lasso Pressure**: your pressure along the edge sets how much paint goes down.
+- **Lasso Texture**: a fill with texture.
+- **Lasso Eraser**: clears the shape.
+
+In the brush editor's **Fill** page, choose **Flat** or **Gradient**, the gradient's direction
+(**Along** your line or **Out** from the start) and its curve, and **Edge softness** for a feathered
+edge.

@@ -1,0 +1,90 @@
+---
+title: Import and export
+description: Bringing in pictures, Krita files and brushes, and getting your work out.
+sidebar:
+  order: 7
+draft: true
+---
+
+import SearchTerms from '../../../components/SearchTerms.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import ImportImage from '../../../assets/manual/import-image.webp';
+
+## Importing pictures and Krita files
+
+<SearchTerms terms="import image, photo, reference, kra, open file, place image, trace" />
+
+Tap **Import** in the library or in a sketchbook, then choose **Photos** or **Files**. You can bring
+in any picture (PNG, JPEG, HEIC and more) or a Krita file (.kra).
+
+Choose where it goes:
+
+- **A loose page**, at the picture's own size.
+- **A page in a sketchbook**, added at the end. Choose **Fit** to show the whole picture, **Fill** to
+  cover the page, or **Free** to scale and place it yourself.
+
+<Screenshot src={ImportImage} alt="The Import image sheet: Page in a sketchbook chosen, the sketchbook picker, Fit, Fill and Free, and a preview of a landscape picture fitted to a portrait page." caption="Placing a picture in a sketchbook, on Fit." />
+
+The picture becomes the paint of a new page, so you can paint into it straight away. A Krita file
+comes in as one flattened picture; its layers aren't kept.
+
+## Krita brush bundles
+
+<SearchTerms terms="Krita, bundle, kpp, import brushes, presets, brush packs" />
+
+Import Krita brush bundles (.bundle) and presets (.kpp) from the brush library's **Import** button
+or **Settings › Resources › Brushes**. Each bundle gets its own group, and a preset's picture becomes
+its icon.
+
+Pleinbook reads Krita's Pixel brushes as Dry brushes, Colour Smudge brushes as Wet brushes and Shape
+brushes as Lasso brushes. Other kinds of brush are skipped, and the summary tells you how many came
+in. If a brush needs a tip from another bundle, import that bundle first, then this one again.
+
+See [Krita compatibility](/docs/krita-compatibility/) for the details.
+
+## Photoshop brushes
+
+<SearchTerms terms="Photoshop, abr, brush tips, import abr" />
+
+Import Photoshop .abr files the same way. Pleinbook takes their brush tips and makes each one a Dry
+brush with pressure controlling size. Photoshop's own brush settings aren't brought in, so shape the
+dynamics yourself in the brush editor.
+
+## Exporting pages
+
+<SearchTerms terms="export, save, share, PNG, Photos, camera roll, kra, Krita file, layers, print" />
+
+Long-press a page in its sketchbook:
+
+- **Save to Photos** saves the page as a PNG at full resolution.
+- **Share…** sends the same PNG anywhere: Files, AirDrop, messages, other apps.
+- **Export for Krita…** makes a .kra file with two layers, **Paint** over **Paper**. Krita blends
+  layers a little differently, so thin glazes can look slightly different there.
+
+A whole sketchbook can be exported as a [PDF art book](/docs/pleinbook-unlock/#sketchbook-pdfs), and
+a page as a [replay video](/docs/pleinbook-unlock/#replay-videos), with Pleinbook Unlock.
+
+## Exporting brushes
+
+<SearchTerms terms="export brushes, share brushes, make bundle, brush pack" />
+
+Share your brushes as a Krita bundle from **Settings › Resources › Brushes › Export…**. Choose the
+brushes, give the bundle a name, author and description, and share it. It opens in Krita, and back
+in Pleinbook exactly as you made it. Lasso brushes open in Krita as Shape brushes with a flat fill.
+
+Your **Artist Name** in Settings is used as the bundle's author.
+
+## Supported formats
+
+<SearchTerms terms="file types, formats, compatibility" />
+
+| | Import | Export |
+| --- | --- | --- |
+| Pictures | PNG, JPEG, HEIC, TIFF and more | PNG |
+| Krita files | .kra (flattened) | .kra (paint and paper layers) |
+| Brushes | Krita .bundle and .kpp, Photoshop .abr tips | Krita .bundle |
+| Brush tips | PNG, GBR, GIH, ABR | |
+| Textures | Pictures, GIMP .pat | |
+| Palettes | .gpl, .kpl, .aco, .ase, .swatches, photos | |
+| Sketchbooks | | PDF (Pleinbook Unlock) |
+| Replays | | HEVC video (Pleinbook Unlock) |

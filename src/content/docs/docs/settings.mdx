@@ -1,0 +1,87 @@
+---
+title: Settings
+description: Every setting in Pleinbook, and what it does.
+sidebar:
+  order: 9
+draft: true
+---
+
+import SearchTerms from '../../../components/SearchTerms.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import Settings1 from '../../../assets/manual/settings-1.webp';
+import SettingsPencilPressure from '../../../assets/manual/settings-pencil-pressure.webp';
+
+Open Settings from the gear in the library.
+
+<Screenshot src={Settings1} alt="The Settings sheet: Artist Name, Resources, Easy Mode and Appearance." />
+
+## General
+
+<SearchTerms terms="artist name, resources, manage brushes, restore built-in, Easy Mode" />
+
+- **Artist Name:** used on PDF art books and brush bundles you export.
+- **Resources:** import and manage brushes, brush tips, textures, paper textures, book covers and
+  palettes. Hide what you don't use, delete what you've imported, and restore any built-ins you've
+  removed.
+- **Easy Mode:** adds a single undo step. See [No undo, and Easy Mode](/docs/getting-started/#no-undo-and-easy-mode).
+
+## Appearance and layout
+
+<SearchTerms terms="theme, dark mode, light mode, background colour, left handed, lefty" />
+
+- **Theme:** System, Light or Dark.
+- **Canvas background:** the colour around the page when it doesn't fill the screen.
+- **Left-handed layout:** moves the tool rail and colour panel to the left edge and the scratchpad
+  to the right, out from under your hand.
+
+## Painting
+
+<SearchTerms terms="paint with, finger, Pencil mode, one finger, smudge finger" />
+
+- **Paint with:** Apple Pencil or Finger. Pleinbook switches to Apple Pencil the first time it sees
+  one, unless you've chosen here.
+- **One finger** (with Apple Pencil): the brush your finger uses, Finger Smudge to start with, or
+  None. Assign another from the brush library with **Assign to Finger**.
+
+## Apple Pencil
+
+<SearchTerms terms="double tap, squeeze, Pencil Pro, Pencil gestures, shortcuts" />
+
+- **Squeeze** (Apple Pencil Pro): **Pick a colour** by default.
+- **Double tap:** **Kit ring** by default.
+
+Either can be Pick a colour, Kit ring, Scratchpad (shows or hides it) or Nothing. If the iPad's own Apple Pencil settings give the
+gesture to something else, Pleinbook leaves it alone.
+
+## Pressure and touch
+
+<SearchTerms terms="pressure, calibrate, calibration, pressure curve, heavy hand, light touch, finger pressure, palm" />
+
+- **Pencil pressure:** calibrate how hard you need to press for full pressure, so you never have to
+  push harder than is comfortable, and shape the pressure curve. Try it on the test pad.
+- **Finger pressure:** calibrate a light touch and a firm press, for painting with your finger.
+- **Palm rejection:** for painting with your finger, measure your resting hand so it's told apart
+  from a finger.
+
+<Screenshot src={SettingsPencilPressure} alt="The Pencil Pressure page, with the calibration button and the pressure curve." caption="Pencil pressure." />
+
+## Page details
+
+<SearchTerms terms="location, place recording, where painted" />
+
+- **Record place:** notes where each page was first painted. See [Place recording](/docs/sketchbooks/#place-recording).
+
+## Sync and support
+
+<SearchTerms terms="iCloud status, sync status, restore purchases, tip jar, support Pleinbook" />
+
+- **Sync:** iCloud sync's status, with Pleinbook Unlock. See [iCloud sync](/docs/pleinbook-unlock/#icloud-sync).
+- **Support Pleinbook:** buy or restore Pleinbook Unlock, or leave a tip.
+
+## Diagnostics
+
+<SearchTerms terms="version, latency, engine version, bug report" />
+
+- **Input latency (estimate)** and **Brush engine version**. The brush
+  engine version is useful in a [bug report](/support/#reporting-a-bug).
+- **Acknowledgements:** the open-source software Pleinbook uses.

@@ -1,0 +1,156 @@
+---
+title: Getting started
+description: Your first page, the drawing screen, Apple Pencil and fingers, why there's no undo, and saving your painting.
+sidebar:
+  order: 1
+draft: true
+---
+
+import SearchTerms from '../../../components/SearchTerms.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import GettingStartedDrawingScreen from '../../../assets/manual/getting-started-drawing-screen.webp';
+import UiCrop from '../../../components/UiCrop.astro';
+import TopBar from '../../../assets/manual/getting-started-top-bar.webp';
+import ToolRail from '../../../assets/manual/getting-started-tool-rail.webp';
+
+## Your first page
+
+<SearchTerms terms="start, begin, new, first launch, blank page, how to paint" />
+
+Pleinbook opens on a blank page in a sketchbook called **Sketchbook 1**, ready to paint. After that,
+it always opens on the last page you had open.
+
+1. **Choose a brush.** Tap the brush button at the top of the tool rail on the right, then tap a
+   brush. Round Opaque is a good one to start with.
+2. **Choose a colour.** Tap the colour disc on the tool rail and pick from the wheel, or mix your
+   own on the [scratchpad](/docs/colour/#the-scratchpad).
+3. **Paint.** Strokes go straight onto the page. The page stays wet, so you can keep pushing paint
+   around with a [Wet brush](/docs/painting/#dry-wet-and-lasso-brushes) or your finger.
+4. **Turn the page.** On the last page of a sketchbook, the arrow in the top bar becomes a **+**. Tap it for a fresh
+   page in the same sketchbook.
+
+When a page isn't working, start the next one rather than fixing the last. That's what a
+sketchbook is for. The goal isn't to never finish, but rather to not be too precious about sketches.
+Sometimes a fresh start is all it takes for the inspiration to flow after what feels like a big blockage.
+
+## The drawing screen
+
+<SearchTerms terms="interface, toolbar, top bar, tool rail, buttons, controls, icons, full screen" />
+
+The page fills the screen, and the controls float over it. While you paint with Apple Pencil, any
+panel your stroke comes near fades out of the way, then comes back a moment after you lift.
+
+<Screenshot src={GettingStartedDrawingScreen} alt="Pleinbook's drawing screen on iPad mini: a painted page, the top bar along the top and the tool rail on the right." caption="The drawing screen: the top bar along the top, the tool rail on the right." />
+
+### Top bar
+
+Along the top left, from left to right (shown with Easy Mode on):
+
+<UiCrop src={TopBar} alt="The top bar: book, page name with arrows, lock, undo, value check, mirror, adjustments and guides.">
+
+| Button | What it does |
+| --- | --- |
+| Book | Back to this sketchbook's pages. |
+| ‹ Page › | The page name and its place in the book. Tap the name to rename it; the arrows turn the page, and **+** adds a new one. |
+| Lock | [Locks the page](#locking-a-page) so it can't be painted on. |
+| Undo | Only with [Easy Mode](#no-undo-and-easy-mode) on. |
+| Value check | Shows the page in greys. See [Seeing your work](/docs/seeing-your-work/#value-check-and-mirror). |
+| Mirror | Flips the page left-to-right based on how you're viewing it. |
+| Adjustments | Levels, HSL, Curves and Gradient Map, applied straight to the page rather than as a layer. |
+| Guides | Lines, grids, perspective and a golden spiral that float over the page. They're never baked into the painting, and you can show or hide them at any time. |
+
+</UiCrop>
+
+### Tool rail
+
+Down the right edge, or the left in [left-handed layout](/docs/settings/#appearance-and-layout), from top
+to bottom:
+
+<UiCrop side src={ToolRail} alt="The tool rail, top to bottom: brush, dial, colour disc, eyedropper, palette and ring.">
+
+| Button | Tap | Drag up or down |
+| --- | --- | --- |
+| Brush | Opens the [brush library](/docs/brushes/#the-brush-library). | Changes the brush's opacity. |
+| Dial | Opens the [brush editor](/docs/brushes/#the-brush-editor). | Changes the brush's size. |
+| Colour | Opens the [colour panel](/docs/colour/#picking-a-colour). | Lightens or darkens the colour. |
+| Eyedropper | Every touch picks a colour until you tap it again. | Drag onto the page and lift to pick a colour. |
+| Palette | Shows the [scratchpad](/docs/colour/#the-scratchpad). | |
+| Ring | Opens the [kit ring](/docs/brushes/#kits-and-the-kit-ring). | |
+
+</UiCrop>
+
+The button in the top-right corner hides the top bar and tool rail for full screen. Tap it again to
+bring them back.
+
+## Apple Pencil and fingers
+
+<SearchTerms terms="gestures, touch, finger painting, smudge, double tap, squeeze, Pencil Pro, hover, no Pencil" />
+
+The first time Pleinbook sees an Apple Pencil, the Pencil becomes your brush and fingers do other
+jobs. You can choose for yourself in **Settings › Painting › Paint with**.
+
+### With Apple Pencil
+
+- **The Pencil paints** with the current brush. Hovering shows the brush's outline before you touch
+  down.
+- **One finger smudges**, using the Finger Smudge brush. Choose another brush for your finger by
+  long-pressing it in the brush library and choosing **Assign to Finger**, or turn the finger off in
+  **Settings › Painting › One finger**.
+- **Hold a finger still** on the page for a moment to pick up a colour. A loupe shows the colour
+  under your finger; lift to take it. Touch down with the Pencil while holding to pick an exact
+  point.
+- **Double-tap** the Pencil to open the kit ring, and **squeeze** Apple Pencil Pro to pick up the
+  colour under the tip. Change either in **Settings › Apple Pencil**.
+- Fingers are ignored while the Pencil is touching the glass, so a resting hand doesn't smudge.
+
+### Without a Pencil
+
+- **One finger paints**, with pressure taken from how much of your finger touches the glass.
+  Calibrate it in **Settings › Pressure and touch › Finger pressure**.
+- **Two fingers smudge.**
+- **Hold a finger still** to pick up a colour.
+
+**Three fingers** slide the page within the space around it, when the page doesn't fill the screen.
+
+## No undo, and Easy Mode
+
+<SearchTerms terms="undo, redo, revert, mistake, take back, go back, cancel stroke, Easy Mode" />
+
+We believe in a sketchbook being raw and authentic, so undo is off by default, even if that means
+embracing mistakes and accidents. Every mark is a commitment, as it is on paper.
+
+If you'd like a safety net while you learn, turn on **Easy Mode** in Settings. An **Undo** button
+appears in the top bar and takes back the page's last change: a stroke, a fill, an adjustment or a
+mirror. It's a single step: after you use it, it waits for your next mark.
+
+The scratchpad never has undo, with or without Easy Mode.
+
+## Locking a page
+
+<SearchTerms terms="lock, protect, finished, read only, accidental strokes, padlock" />
+
+When a painting is finished, lock it so a stray stroke can't spoil it. Tap the padlock in the top
+bar, or long-press the page in its sketchbook and choose **Lock**.
+
+A locked page can't be painted on, mirrored, adjusted or deleted, and a "Page locked" note appears
+if you try. You can still look at it, pick colours from it, export it and use the scratchpad
+alongside it.
+
+You can also lock a **whole sketchbook** from its menu in the library. No pages can then be added
+to it, moved or changed.
+
+## Saving your painting
+
+<SearchTerms terms="save, export, share, Photos, camera roll, Files, AirDrop, PNG, kra, Krita, send, download" />
+
+Pleinbook keeps your work as you paint, so there's no save button. To take a painting out of
+Pleinbook, tap the book in the top bar to see the sketchbook's pages, then long-press the page:
+
+- **Save to Photos** adds it to your photo library as a full-resolution PNG.
+- **Share…** sends the same PNG anywhere: **Save to Files**, AirDrop, Messages, Mail or another
+  app.
+- **Export for Krita…** makes a .kra file, with the paint and the paper on separate layers, and
+  opens the same share options.
+
+For a loose page, long-press it in the library instead. More in
+[Exporting pages](/docs/import-and-export/#exporting-pages).

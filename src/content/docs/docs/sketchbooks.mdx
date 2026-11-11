@@ -1,0 +1,92 @@
+---
+title: Sketchbooks
+description: The library, making sketchbooks, pages, covers and place recording.
+sidebar:
+  order: 6
+draft: true
+---
+
+import SearchTerms from '../../../components/SearchTerms.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import SketchbooksNewSketchbook from '../../../assets/manual/sketchbooks-new-sketchbook.webp';
+import SketchbooksPageMenu from '../../../assets/manual/sketchbooks-page-menu.webp';
+
+## The library
+
+<SearchTerms terms="library, lightbox, home, all sketchbooks, files, browse, sort, favourites, search pages" />
+
+The library holds your sketchbooks and loose pages. From a painting, tap the book in the top bar to
+see that sketchbook's pages, then the back button for the library.
+
+- **Tap** a sketchbook to see its pages, or a loose page to paint on it.
+- **Search** for sketchbooks and pages by name.
+- **Filter and sort** by kind and by last edited, date created, name or your own order. Drag tiles to
+  arrange them yourself.
+- **Favourite** sketchbooks and pages from their long-press menu; favourites sit at the top.
+
+**New** makes a sketchbook or a **loose page**: a single page that sits on its own in the library, at
+any size.
+
+Long-press a sketchbook to rename, duplicate, change its cover, export it as a PDF, lock or delete it.
+
+## Making a sketchbook
+
+<SearchTerms terms="new sketchbook, create, page size, dimensions, resolution, pixels, orientation, landscape, portrait" />
+
+Choosing a sketchbook defines the format for a whole set of work, so a new one asks for:
+
+- **Name.**
+- **Page size**, in pixels, and orientation. The default is your device's screen, so the page shows one
+  pixel to one pixel. A bigger page is scaled down to fit. Every page in the book is the same size,
+  for the life of the book.
+- **Paper:** its colour, grain and grain depth, with a preview at actual size.
+- **Cover:** the first page, a cloth colour or a premium cover.
+
+<Screenshot src={SketchbooksNewSketchbook} alt="The New sketchbook sheet, with the name, page size and paper preview." caption="Making a new sketchbook." />
+
+There's a limit to how large a page your device can paint on; the sheet tells you if you go over it.
+
+## Pages
+
+<SearchTerms terms="page menu, rename page, duplicate page, move page, delete page, details, reorder pages, stats" />
+
+A sketchbook's pages are shown as a grid. Drag them to reorder, tap one to open it, and long-press
+for its menu:
+
+<Screenshot src={SketchbooksPageMenu} alt="A page's long-press menu in the sketchbook grid: Open, Rename, Duplicate, Move to, Lock, Details, Paper and the export options." caption="A page's menu." width={250} />
+
+| Option | What it does |
+| --- | --- |
+| Open, Rename | |
+| Duplicate | A copy of the page, with a fresh scratchpad. |
+| Duplicate with scratchpad | A copy that keeps its scratchpad mixes. |
+| Move to… | To another sketchbook (fitting it to the new size), or out as a loose page. |
+| Lock | See [Locking a page](/docs/getting-started/#locking-a-page). |
+| Details… | When it was made and last changed, strokes, time spent painting, brushes used and where it was painted. |
+| Paper… | The page's own [paper](/docs/painting/#paper). |
+| Use as cover | Makes this page the sketchbook's cover. |
+| Save to Photos, Share…, Export for Krita… | See [Exporting pages](/docs/import-and-export/#exporting-pages). |
+| Export replay video… | See [Replay videos](/docs/pleinbook-unlock/#replay-videos). |
+| Delete | Removes the page and its history for good. |
+
+## Covers
+
+<SearchTerms terms="cover, book cover, cloth, premium covers, cover image" />
+
+A sketchbook's cover shows in the library. Choose **1st page** (whichever page comes first), one of
+the cloth covers (Kraft, Charcoal, Sage, Navy, Oxblood, Linen, Ochre, Slate), a picture of your own
+from **Settings › Resources › Book Covers**, or any page with **Use as cover**.
+
+Premium covers come with [Pleinbook Unlock](/docs/pleinbook-unlock/#premium-covers-and-papers).
+
+## Place recording
+
+<SearchTerms terms="location, place, where painted, GPS, plein air, map, record place" />
+
+Pleinbook can note where each page was first painted, which is handy for plein air work. It's off
+unless you turn it on in **Settings › Page details**.
+
+When it's on, a page records its place the first time you paint on it. You'll see it in the page's
+**Details…**, and you can choose to print it under each page in a
+[PDF art book](/docs/pleinbook-unlock/#sketchbook-pdfs). Pages you've already made aren't changed.
+The place stays with your pages, and nothing goes to us.

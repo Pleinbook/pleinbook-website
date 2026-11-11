@@ -5,9 +5,26 @@
  * and chrome as floating frosted capsules. Brand colours are the icon's brushmark gradient.
  * Starlight sets data-theme="light" | "dark" on <html>; the homepage does the same.
  */
-/* Headings: Fraunces (SIL Open Font License), self-hosted. Full axes for SOFT and WONK. */
-@import '@fontsource-variable/fraunces/full.css';
-@import '@fontsource-variable/fraunces/full-italic.css';
+/*
+ * Headings: Fraunces (SIL Open Font License), self-hosted from public/fonts/. The variable font
+ * pinned to the one look the site uses (weight 600, SOFT 100, WONK 1, opsz 144), Latin only:
+ * about 18 KB upright and 23 KB italic, against 121 KB and 150 KB for the full axes. Rebuilt by
+ * scripts/make-fonts.sh. Other characters fall back to the serif stack in --pb-font-display.
+ */
+@font-face {
+	font-family: 'Fraunces';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url('/fonts/fraunces-600-normal.woff2') format('woff2');
+}
+@font-face {
+	font-family: 'Fraunces';
+	font-style: italic;
+	font-weight: 600;
+	font-display: swap;
+	src: url('/fonts/fraunces-600-italic.woff2') format('woff2');
+}
 
 :root {
 	/* Paper and ink */
@@ -57,7 +74,7 @@
 	--pb-font-rounded: ui-rounded, 'SF Pro Rounded', var(--pb-font);
 	--pb-font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
 	/* Headings. Use with --pb-display-axes; the colour line in the hero is the italic. */
-	--pb-font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+	--pb-font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
 	--pb-display-axes: 'SOFT' 100, 'WONK' 1, 'opsz' 144;
 
 	--pb-radius-s: 12px;

@@ -1,0 +1,142 @@
+---
+// The manual's left panel: every page, with its sections (h2s) listed underneath, so people can jump
+// straight to a topic or scroll through a page. The page you're on is marked, and the section you're
+// reading is highlighted as you scroll. Replaces Starlight's sidebar; draft pages show in dev only.
+import MobileMenuFooter from './MobileMenuFooter.astro';
+import { manualIndex } from '../data/manual';
+
+const route = Astro.locals.starlightRoute;
+const pages = await manualIndex();
+const currentId = route.id;
+---
+
+<nav class="pb-manual-nav" aria-label="Manual">
+	<ul>
+		{
+			pages.map((p) => {
+				const isPage = p.id === currentId;
+				return (
+					<li class:list={['page', { current: isPage }]}>
+						<a href={p.href} aria-current={isPage ? 'page' : undefined}>
+							{p.title}
+							{p.badge && <span class="badge">{p.badge}</span>}
+						</a>
+						{p.sections.length > 0 && (
+							<ul class="sections">
+								{p.sections.map((s) => (
+									<li>
+										<a href={`${p.href}#${s.slug}`} data-section={isPage ? s.slug : undefined}>
+											{s.text}
+										</a>
+									</li>
+								))}
+							</ul>
+						)}
+					</li>
+				);
+			})
+		}
+	</ul>
+</nav>
+<div class="md:sl-hidden">
+	<MobileMenuFooter />
+</div>
+
+<script>
+	// Start with the current page in view when the list is taller than the pane.
+	const here = document.querySelector<HTMLElement>('.pb-manual-nav a[aria-current="page"]');
+	const scroller = here?.closest<HTMLElement>('.sidebar-content');
+	if (here && scroller && scroller.scrollHeight > scroller.clientHeight) {
+		const top = here.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
+		if (top > scroller.clientHeight * 0.6) scroller.scrollTop = top - scroller.clientHeight / 3;
+	}
+
+	// Highlight the section being read on the current page.
+	const links = new Map(
+		[...document.querySelectorAll<HTMLAnchorElement>('.pb-manual-nav a[data-section]')].map((a) => [
+			a.dataset.section!,
+			a,
+		]),
+	);
+	if (links.size) {
+		const headings = [...links.keys()]
+			.map((id) => document.getElementById(id))
+			.filter((h): h is HTMLElement => !!h);
+		const update = () => {
+			// The last heading above a line a third of the way down the window.
+			const line = innerHeight / 3;
+			let current: string | undefined;
+			for (const h of headings) if (h.getBoundingClientRect().top <= line) current = h.id;
+			for (const [id, a] of links) {
+				if (id === current) a.setAttribute('aria-current', 'location');
+				else a.removeAttribute('aria-current');
+			}
+		};
+		update();
+		addEventListener('scroll', update, { passive: true });
+		addEventListener('resize', update);
+	}
+</script>
+
+<style>
+	.pb-manual-nav ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.page + .page {
+		margin-top: 6px;
+	}
+	.page > a {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
+		padding: 7px 10px;
+		border-radius: 10px;
+		color: var(--pb-ink);
+		font-size: 15px;
+		font-weight: 600;
+		text-decoration: none;
+	}
+	.page > a:hover {
+		background: var(--pb-glass-hover);
+	}
+	.page > a[aria-current='page'] {
+		background: var(--pb-glass-bg-strong);
+		box-shadow:
+			var(--pb-glass-depth),
+			inset 0 0 0 1.5px #0a84ff;
+	}
+	.badge {
+		padding: 1px 8px;
+		border-radius: 999px;
+		background: var(--pb-brand);
+		color: #fff;
+		font-size: 11px;
+		font-weight: 600;
+	}
+	.sections {
+		margin: 2px 0 4px 10px !important;
+		padding-left: 10px !important;
+		border-left: 1px solid var(--pb-rule);
+	}
+	.sections a {
+		display: block;
+		padding: 4px 10px;
+		border-radius: 8px;
+		color: var(--pb-ink-2);
+		font-size: 14px;
+		line-height: 1.35;
+		text-decoration: none;
+	}
+	.sections a:hover {
+		background: var(--pb-glass-hover);
+		color: var(--pb-ink);
+	}
+	.sections a[aria-current='location'] {
+		background: var(--pb-glass-hover);
+		color: var(--pb-ink);
+		font-weight: 600;
+	}
+</style>

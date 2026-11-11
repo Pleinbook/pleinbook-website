@@ -1,0 +1,47 @@
+---
+title: Krita compatibility
+description: What Pleinbook reads and writes from Krita.
+sidebar:
+  order: 10
+draft: true
+---
+
+import SearchTerms from '../../../components/SearchTerms.astro';
+
+Pleinbook imports Krita brush bundles and .kra files, and exports both. Pleinbook is not affiliated
+with Krita, and contains no Krita code or resources.
+
+## Brush bundles
+
+<SearchTerms terms="Krita brushes, bundle import, kpp, pixel brush, colour smudge, shape brush, compatible brushes" />
+
+When you import a Krita bundle (.bundle) or preset (.kpp):
+
+| In Krita | In Pleinbook |
+| --- | --- |
+| Pixel brushes | Dry brushes |
+| Colour Smudge brushes | Wet brushes |
+| Shape brushes | Lasso brushes |
+| Other brush engines | Skipped, and counted in the import summary |
+| Brush tips (PNG, GBR, GIH) and patterns | Imported with the brushes that use them |
+| SVG tips, MyPaint brushes, other resources | Skipped |
+
+Tips, spacing, sensor curves, scatter, texture, opacity and flow carry over, and colour mixes as
+pigment rather than Krita's RGB. A preset's picture becomes its icon.
+
+If a brush uses a tip from another bundle, Pleinbook tells you which. Import that bundle first, then
+this one again.
+
+**Exporting** makes a Krita bundle of your brushes (**Settings › Resources › Brushes › Export…**).
+Each brush also carries its full Pleinbook settings, so it comes back into Pleinbook exactly. Lasso
+brushes open in Krita as Shape brushes with a flat fill.
+
+## Krita files
+
+<SearchTerms terms="kra, Krita document, layers, open in Krita, export kra" />
+
+**Importing** a .kra brings in its flattened image as a page; its layers aren't kept.
+
+**Exporting** a page with **Export for Krita…** makes a .kra with two layers: **Paint** over
+**Paper**. Krita blends the layers normally rather than as pigment, so thin glazes can look slightly
+different there, but the file's merged image matches Pleinbook exactly.

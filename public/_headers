@@ -1,0 +1,30 @@
+# Cloudflare Pages response headers.
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+# Built assets (CSS, JS, images, fonts) have a content hash in their file name, so a changed file
+# always gets a new URL: browsers can keep them for a year without checking back.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fonts: the file name carries its settings (fraunces-600-…), so a changed font gets a new name.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The search index is rebuilt with each deploy under the same names: keep it for a day, then check.
+/pagefind/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# Icons and the social card keep their names between deploys.
+/favicon.ico
+  Cache-Control: public, max-age=86400
+/favicon.svg
+  Cache-Control: public, max-age=86400
+/apple-touch-icon.png
+  Cache-Control: public, max-age=86400
+/og.jpg
+  Cache-Control: public, max-age=86400
+
+# Every page: no MIME sniffing, and only the origin in referrers sent to other sites.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

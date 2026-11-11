@@ -43,6 +43,8 @@ const traits = [
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<link rel="preload" href="/fonts/fraunces-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="/fonts/fraunces-600-italic.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 		<link rel="icon" href="/favicon.ico" sizes="48x48" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -148,8 +150,10 @@ const traits = [
 						mixes.map((m, i) => (
 							<div class="ladders" role="tabpanel" id={`mix-${m.id}`} aria-labelledby={`tab-${m.id}`} hidden={i !== 0}>
 								<div class="ladder">
-									<span class="lname">Mixed like light</span>
-									<div class="strip" role="img" aria-label={`${m.label} blended as light: the middle goes dull.`}>
+									<span class="lname">
+										<Icon name="lightbulb" size={16} stroke={2} class="lmark" /> Mixed in other apps
+									</span>
+									<div class="strip" role="img" aria-label={`${m.label} blended as light, as most apps do: the middle goes dull.`}>
 										<canvas data-mix={JSON.stringify({ colors: m.digital, seed: 101 + i * 7 })} />
 									</div>
 								</div>
@@ -199,7 +203,7 @@ const traits = [
 					</article>
 				</div>
 				<p class="aside">
-					Want a safety net while you learn? <a href="/docs/getting-started/no-undo/">Easy Mode</a> adds a single
+					Want a safety net while you learn? <a href="/docs/getting-started/#no-undo-and-easy-mode">Easy Mode</a> adds a single
 					undo step.
 				</p>
 			</section>
@@ -241,7 +245,7 @@ const traits = [
 				</div>
 				<p class="aside">
 					Imports Krita brush bundles and Photoshop brush tips, and exports brushes back as Krita bundles.{' '}
-					<a href="/docs/reference/krita-compatibility/">What carries over</a>
+					<a href="/docs/krita-compatibility/">What carries over</a>
 				</p>
 			</section>
 
@@ -698,6 +702,15 @@ const traits = [
 		color: var(--pb-ink-2);
 		font-size: 14px;
 		font-weight: 600;
+	}
+	/* A lightbulb (mixed like light) in the brushmark's 16 px, so both labels' words line up. In the
+	   heading's yellow: ochre on cream, the paint's yellow in dark mode. */
+	.lname :global(.lmark) {
+		flex: none;
+		color: #a67c00;
+	}
+	:global([data-theme='dark']) .lname :global(.lmark) {
+		color: #ffd700;
 	}
 	/* The mix, painted straight onto the card (src/scripts/bristle.ts): no box, nothing cropped. */
 	.strip {

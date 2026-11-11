@@ -1,0 +1,93 @@
+---
+title: Colour
+description: Pigment mixing, the scratchpad, picking colours, the eyedropper and palettes.
+sidebar:
+  order: 3
+draft: true
+---
+
+import SearchTerms from '../../../components/SearchTerms.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import ColourPanelWheel from '../../../assets/manual/colour-panel-wheel.webp';
+import ColourScratchpad from '../../../assets/manual/colour-scratchpad.webp';
+import ColourSwatches from '../../../assets/manual/colour-swatches.webp';
+
+## Pigment mixing
+
+<SearchTerms terms="mixing, blend colours, subtractive, Kubelka Munk, blue and yellow, muddy, realistic paint" />
+
+Most apps blend colours like light, so blue and yellow make grey. Pleinbook mixes them like paint,
+so blue and yellow make green, red and white make pink, and red and ultramarine make a deep violet.
+
+Mixing happens everywhere paint meets paint: when strokes overlap, when a Wet brush or your finger
+smudges, on the scratchpad, and where paint sits over toned paper. There's nothing to switch on.
+
+## The scratchpad
+
+<SearchTerms terms="palette, mixing area, test strokes, scratch paper, swatches, practise" />
+
+The scratchpad is a separate piece of paper for mixing colours and trying brushes before you touch
+your painting. Tap the palette button on the tool rail to show it, and the **×** on its bar to put
+it away.
+
+<Screenshot src={ColourScratchpad} alt="The scratchpad in the bottom-left corner, with yellow and blue strokes mixed into green, and the kit along its bar." caption="The scratchpad, with the kit along its bar." />
+
+It works like the page: the same brushes, wet paint and mixing, and no undo. Hold a finger on it to
+pick up a colour you've mixed. It always uses the same paper as the page you're painting on.
+
+- **Move it** by dragging its bar, and **resize it** from the corner. The bar can go above or below
+  the paper.
+- **Your kit** sits at the left of the bar, so you can change brush without leaving it.
+- **Run out of space?** Tap **›** to turn to the next scratchpad page, or **+** for a new one.
+- **Look back** with the grid button: every scratchpad page you've used, oldest first.
+
+Each painting keeps its scratchpad. Open a page again and the scratchpad page you used with it comes
+back, so the mixes for every painting stay with it.
+
+## Picking a colour
+
+<SearchTerms terms="colour picker, color picker, wheel, sliders, HSV, RGB, hex, recent colours" />
+
+Tap the colour disc on the tool rail to open the colour panel. Choose **Wheel** (a hue ring around a
+saturation and brightness square) or **Sliders** (H, S, V and R, G, B). Your recent colours sit
+along the top.
+
+<Screenshot src={ColourPanelWheel} alt="The colour panel open over the page, showing the hue ring and square, the current colour and recent colours." caption="The colour panel, on Wheel." />
+
+- **Put on scratchpad** lays the colour on the scratchpad as a swatch, ready to mix.
+- **Pin** the panel to keep it open while you paint; drag its title to move it, and its corner to
+  resize it. Unpinned, it closes when you start painting.
+- **Drag the colour disc** up or down without opening the panel to lighten or darken the current
+  colour.
+
+The kit ring has the same wheel in its middle, for changing colour without going to the rail.
+
+## The eyedropper
+
+<SearchTerms terms="eyedropper, colour picker, sample, pick colour, loupe, dropper" />
+
+Pick up any colour you see on the page or the scratchpad:
+
+- **Hold a finger still** for a moment. A loupe shows the colour under your finger above the colour
+  you have now; lift to take it.
+- **Drag from the eyedropper** on the tool rail onto the page and lift.
+- **Tap the eyedropper** on the tool rail, and every touch picks a colour until you tap it again.
+- **Squeeze Apple Pencil Pro** (the default) and lift to pick where the Pencil is hovering.
+
+A finger takes a small average of the colours under it; the Pencil picks an exact point.
+
+## Palettes
+
+<SearchTerms terms="palettes, swatches, colour sets, import palette, gpl, ase, aco, from photo" />
+
+Tap **Swatches** on the scratchpad's bar to see your recent colours and your palettes. Tap a colour
+to lay it on the scratchpad and pick it up, or tap a palette's tube to lay out every colour in it.
+
+<Screenshot src={ColourSwatches} alt="The Swatches popover above the scratchpad, showing recent colours, an empty New Palette bar and Import Palette." caption="Swatches: recent colours, a new palette and your saved palettes." />
+
+- **Make a palette:** tap the empty slots in the New Palette bar to add the current colour, then
+  **Save** and name it.
+- **Import a palette** from a palette file (.gpl, .kpl, .aco, .ase or .swatches), or take eight
+  colours from a photo.
+- **Starter palettes** include Zorn, Limited Earth, Split Primary, Apelles and Ultramarine + Burnt
+  Sienna. Restore them from **Settings › Resources › Palettes** if you delete them.

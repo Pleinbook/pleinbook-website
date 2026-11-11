@@ -1,0 +1,22 @@
+---
+// Extra words for search, hidden on the page: put it under a heading so people find that section
+// with the words they'd use (e.g. <SearchTerms terms="undo, revert, mistake" />). Pagefind indexes it;
+// it isn't shown, and screen readers skip it.
+interface Props {
+	terms: string;
+}
+const { terms } = Astro.props;
+---
+
+<span class="pb-search-terms" aria-hidden="true">{terms}</span>
+
+<style>
+	.pb-search-terms {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+</style>

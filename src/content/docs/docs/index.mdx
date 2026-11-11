@@ -1,14 +1,26 @@
 ---
-title: "Pleinbook manual"
-description: "How to paint, mix and keep sketchbooks in Pleinbook."
+title: Pleinbook manual
+description: How to paint, mix colour and keep sketchbooks in Pleinbook.
 draft: true
 ---
-TODO: write this page.
 
-{/*
-This page should cover:
-  - What Pleinbook is: a sketchbook for studies and plein air painting, not a canvas for finished works
-  - The constraints and why: one layer, page fixed to the glass, no undo, paint that stays wet
-  - Cards linking to each section of the manual
-  - Which features are free and which need Pleinbook Unlock
-*/}
+import { LinkCard, CardGrid } from '@astrojs/starlight/components';
+
+Pleinbook is a sketchbook for quick studies, not finished pieces. Every page is one layer of wet
+paint on paper, fixed to the glass, with no undo, and colours mix like real pigment. This manual
+shows you around.
+
+New to Pleinbook? Start with [Getting started](/docs/getting-started/).
+
+<CardGrid>
+	<LinkCard title="Getting started" href="/docs/getting-started/" description="Your first page, the drawing screen, Pencil and fingers." />
+	<LinkCard title="Painting" href="/docs/painting/" description="The page, paper, brushes, erasing and Lasso fills." />
+	<LinkCard title="Colour" href="/docs/colour/" description="Pigment mixing, the scratchpad, picking colours and palettes." />
+	<LinkCard title="Brushes and kits" href="/docs/brushes/" description="The brush library, the kit ring and the brush editor." />
+	<LinkCard title="Seeing your work" href="/docs/seeing-your-work/" description="Value check, mirror, guides and adjustments." />
+	<LinkCard title="Sketchbooks" href="/docs/sketchbooks/" description="The library, pages, covers and place recording." />
+	<LinkCard title="Import and export" href="/docs/import-and-export/" description="Pictures, Krita files, brushes and exports." />
+	<LinkCard title="Pleinbook Unlock" href="/docs/pleinbook-unlock/" description="Replay videos, PDF art books, premium sets and iCloud sync." />
+	<LinkCard title="Settings" href="/docs/settings/" description="Every setting, and what it does." />
+	<LinkCard title="Help and support" href="/support/" description="Quick fixes, and how to get in touch." />
+</CardGrid>

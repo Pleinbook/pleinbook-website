@@ -15,7 +15,14 @@ spec in its `docs/Design & MVP Spec.md`). See README.md for layout and conventio
 - Mixing swatches and painted strokes use real engine colours (`src/data/mixes.ts`, sampled from the app repo's
   `docs/mixing/ladders.png`). Don't invent mixes.
 - Permissive dependencies only (MIT/BSD/ISC/Apache; fonts under the SIL Open Font License); credit them on
-  `/docs/reference/acknowledgements/`. Fonts are self-hosted, never loaded from Google.
+  `/docs/acknowledgements/`. Fonts are self-hosted, never loaded from Google; Fraunces is a trimmed copy
+  in `public/fonts/` (`scripts/make-fonts.sh`).
+- **The manual follows the app.** It was last checked against the app commit named in README.md ›
+  Keeping the manual current: start there, document what changed since, then move that commit forward.
+  Describe what the app actually does (read its code), not the spec.
+- Manual images come from the app's `UITests/ManualScreenshotTests.swift` and `scripts/manual-shots.mjs`
+  (README.md › Manual screenshots). Retake and re-run them; don't edit images by hand.
+- Name or count premium items (covers, papers, brush packs) only on the Pleinbook Unlock page; elsewhere, link to it.
 
 ```bash
 npm run dev

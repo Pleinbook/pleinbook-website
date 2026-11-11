@@ -1,0 +1,59 @@
+---
+title: Seeing your work
+description: Value check and mirror, drawing guides and adjustments.
+sidebar:
+  order: 5
+draft: true
+---
+
+import SearchTerms from '../../../components/SearchTerms.astro';
+import Screenshot from '../../../components/Screenshot.astro';
+import SeeingValueCheck from '../../../assets/manual/seeing-value-check.webp';
+import SeeingGuides from '../../../assets/manual/seeing-guides.webp';
+import SeeingAdjustmentsLevels from '../../../assets/manual/seeing-adjustments-levels.webp';
+
+## Value check and mirror
+
+<SearchTerms terms="greyscale, grayscale, black and white, values, tonal, flip, mirror, reverse, horizontal flip" />
+
+**Value check** shows the page in greys, so you can judge light and dark without colour getting in
+the way. Tap it in the top bar or on the kit ring, and tap again to go back. It only changes what you
+see, never the page.
+
+<Screenshot src={SeeingValueCheck} alt="The painted page shown in greys with value check on." caption="Value check on." />
+
+**Mirror** flips the page left-to-right based on how you're viewing it, to show it with fresh eyes.
+It's a real flip of the painting, so tap it again to flip back. You can paint while it's flipped.
+
+## Drawing guides
+
+<SearchTerms terms="guides, grid, perspective, vanishing point, horizon, rule of thirds, golden spiral, golden ratio, composition" />
+
+Guides help you place things: a line, a grid, a perspective grid with one, two or three vanishing
+points, or a golden spiral. They float over the page: they're never baked into the painting and never
+snap your strokes, and you can show or hide them at any time.
+
+1. Tap **Guides** in the top bar, then **+** and choose a guide.
+2. Its settings open. While they're open, touches on the page move the guide instead of painting:
+   drag to move it, and use two fingers to turn or resize it.
+3. Set its colour and opacity, and kind-specific options such as the number of grid squares or
+   perspective lines.
+
+Each page keeps its own guides. Hide them all with the eye, or delete them with the bin.
+
+<Screenshot src={SeeingGuides} alt="A one-point perspective guide over the page, with its settings card open." caption="A one-point perspective guide and its settings." />
+
+## Adjustments
+
+<SearchTerms terms="adjust, levels, curves, hue saturation, HSL, gradient map, colour correction, brightness, contrast" />
+
+Tap **Adjustments** in the top bar to change the whole page: **Levels**, **HSL** (hue, saturation
+and luminosity, all at once or by colour range), **Curves** or **Gradient Map**.
+
+<Screenshot src={SeeingAdjustmentsLevels} alt="The Adjust page panel on Levels, with the page's histogram and input and output controls." caption="Adjustments, on Levels." />
+
+The page updates as you adjust. Hold the eye button to compare with the original, then **Apply**, or
+**Cancel** to leave the page as it was. Adjustments are applied straight to the page rather than as a
+separate layer, changing the paint and the paper together. They never touch the scratchpad.
+
+Without Easy Mode there's no undo after **Apply**.
