@@ -629,23 +629,23 @@ const traits = [
 		padding: clamp(16px, 3vw, 32px);
 		border-radius: var(--pb-radius-l);
 	}
+	/* Two rows of four at every width; when they don't fit, the rows scroll sideways together. */
 	.seg {
-		display: flex;
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: repeat(4, max-content);
 		gap: 6px;
+		overflow-x: auto;
+		scrollbar-width: none;
 	}
-	/* Phones: one row that scrolls sideways, running to the card's edges. */
+	.seg::-webkit-scrollbar {
+		display: none;
+	}
+	/* Phones: the scrolling rows run to the card's edges. */
 	@media (max-width: 600px) {
 		.seg {
-			flex-wrap: nowrap;
-			overflow-x: auto;
-			scrollbar-width: none;
 			margin-inline: calc(-1 * clamp(16px, 3vw, 32px));
 			padding-inline: clamp(16px, 3vw, 32px);
 			scroll-padding-inline: clamp(16px, 3vw, 32px);
-		}
-		.seg::-webkit-scrollbar {
-			display: none;
 		}
 	}
 	.seg button {
