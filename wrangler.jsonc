@@ -1,0 +1,14 @@
+// Cloudflare Workers config: the site is static, so the Worker only serves the built files in dist/.
+// Cloudflare's Git integration runs `npm run build`, then `npx wrangler deploy`, which reads this.
+// public/_headers (copied into dist/) sets the caching and security headers.
+{
+	"name": "pleinbook-website",
+	"compatibility_date": "2026-11-01",
+	"assets": {
+		"directory": "./dist",
+		// Unknown paths get dist/404.html with a 404 status.
+		"not_found_handling": "404-page",
+		// /support and /support/ both serve support/index.html, redirecting to the trailing slash.
+		"html_handling": "auto-trailing-slash"
+	}
+}
