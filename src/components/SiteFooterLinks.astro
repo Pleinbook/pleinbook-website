@@ -2,7 +2,10 @@
 // Shared by the homepage and every manual page.
 import Brushmark from './Brushmark.astro';
 import { contact } from '../data/site';
+import { publishedReleases } from '../data/changelog';
 const year = new Date().getFullYear();
+// Changelog appears once the first release is published (src/changelog/).
+const showChangelog = (await publishedReleases()).length > 0;
 ---
 
 <div class="pb-footer">
@@ -12,7 +15,7 @@ const year = new Date().getFullYear();
 			<a href="/docs/">Manual</a>
 			<a href="/support/">Support</a>
 			<a href={contact.discord} rel="noopener">Discord</a>
-			<a href="/changelog/">Changelog</a>
+			{showChangelog && <a href="/changelog/">Changelog</a>}
 			<a href="/privacy/">Privacy</a>
 		</nav>
 	</div>

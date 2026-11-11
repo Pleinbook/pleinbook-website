@@ -6,7 +6,10 @@
 import Brushmark from './Brushmark.astro';
 import AppStoreGlyph from './AppStoreGlyph.astro';
 import { appStoreLink } from '../data/site';
+import { publishedReleases } from '../data/changelog';
 const store = appStoreLink();
+// Changelog appears once the first release is published (src/changelog/).
+const showChangelog = (await publishedReleases()).length > 0;
 const path = Astro.url.pathname;
 const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'page' as const } : {});
 ---
@@ -20,7 +23,11 @@ const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'p
 		<i class="div" aria-hidden="true"></i>
 		<a class="link" href="/docs/" {...here('/docs/')}>Manual</a>
 		<a class="link" href="/support/" {...here('/support/')}>Support</a>
-		<a class="link wide" href="/changelog/" {...here('/changelog/')}>Changelog</a>
+		{showChangelog && (
+			<a class="link wide" href="/changelog/" {...here('/changelog/')}>
+				Changelog
+			</a>
+		)}
 		{
 			Astro.slots.has('search') && (
 				<>

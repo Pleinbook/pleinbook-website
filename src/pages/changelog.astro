@@ -1,0 +1,119 @@
+---
+// The changelog: one glass card per release (src/changelog/*.md), newest first. Uses Starlight's page
+// frame so it has the site's top bar and footer. Each release links as /changelog/#<version>.
+// Until the first release is published it shows a short note and is kept out of search results.
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { render } from 'astro:content';
+import { visibleReleases, releaseId } from '../data/changelog';
+
+const releases = await Promise.all(
+	(await visibleReleases()).map(async (r) => ({ release: r, Content: (await render(r)).Content })),
+);
+const published = releases.filter((r) => !r.release.data.draft);
+const dateFormat = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const head = [
+	{
+		tag: 'link' as const,
+		attrs: { rel: 'alternate', type: 'application/rss+xml', title: 'Pleinbook changelog', href: '/changelog.xml' },
+	},
+	...(published.length === 0 ? [{ tag: 'meta' as const, attrs: { name: 'robots', content: 'noindex' } }] : []),
+];
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Changelog',
+		description: "What's new in each version of Pleinbook.",
+		template: 'splash',
+		head,
+	}}
+	hasSidebar={false}
+>
+	{
+		releases.length === 0 ? (
+			<p>Pleinbook 1.0 is on its way. Release notes start here at launch.</p>
+		) : (
+			<>
+				<p>
+					What's new in each version of Pleinbook. To hear about new releases, follow the{' '}
+					<a href="/changelog.xml">RSS feed</a>.
+				</p>
+				{releases.map(({ release, Content }) => (
+					<article class="pb-release pb-glass" id={releaseId(release)}>
+						<header>
+							<h2>Pleinbook {release.data.version}</h2>
+							<p class="meta">
+								<time datetime={release.data.date.toISOString().slice(0, 10)}>
+									{dateFormat.format(release.data.date)}
+								</time>
+								{release.data.draft && <span class="draft">Draft</span>}
+							</p>
+						</header>
+						<p class="summary">{release.data.summary}</p>
+						{release.data.engine && (
+							<p class="engine">
+								<strong>Brush engine updated.</strong> Replays of pages painted before this version may look a
+								little different. Your saved paintings aren't affected.
+							</p>
+						)}
+						<Content />
+					</article>
+				))}
+			</>
+		)
+	}
+</StarlightPage>
+
+<style>
+	.pb-release {
+		padding: 28px;
+		border-radius: var(--pb-radius);
+	}
+	.pb-release + .pb-release {
+		margin-top: 2rem;
+	}
+	header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 4px 16px;
+	}
+	header h2 {
+		margin: 0;
+		font-size: 28px;
+	}
+	.meta {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin: 0;
+		color: var(--pb-ink-3);
+		font-size: 15px;
+	}
+	.draft {
+		padding: 2px 10px;
+		border-radius: 999px;
+		background: var(--pb-accent-soft, rgb(120 100 70 / 0.12));
+		color: var(--pb-ink-2);
+		font-size: 13px;
+		font-weight: 600;
+	}
+	.summary {
+		color: var(--pb-ink);
+		font-size: 18px;
+	}
+	.engine {
+		padding: 12px 16px;
+		border-radius: 14px;
+		background: rgb(120 100 70 / 0.08);
+		font-size: 15px;
+	}
+	:global([data-theme='dark']) .engine {
+		background: rgb(0 0 0 / 0.2);
+	}
+	.pb-release :global(h3) {
+		font-size: 20px;
+	}
+</style>
