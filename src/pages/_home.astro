@@ -1,0 +1,1074 @@
+---
+// The full homepage, parked while the site is rebuilt: Astro skips files starting with "_", so this
+// isn't published. To bring it back, rename it to index.astro (replacing the holding page).
+import '../styles/theme.css';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooterLinks from '../components/SiteFooterLinks.astro';
+import AppMock from '../components/AppMock.astro';
+import KitRing from '../components/KitRing.astro';
+import Brushmark from '../components/Brushmark.astro';
+import Icon from '../components/Icon.astro';
+import AppStoreGlyph from '../components/AppStoreGlyph.astro';
+import { mixes } from '../data/mixes';
+import { appStoreLink } from '../data/site';
+import { manualIsLive } from '../data/manual';
+import { strokes, SWATCHES } from '../data/strokes';
+
+const title = 'Pleinbook: a pigment-mixing digital sketchbook';
+const description =
+	'Paint it once, mix your colours, turn the page. Pleinbook is a painting sketchbook for iPad and iPhone, with paint that mixes like pigment, one layer and no undo.';
+
+const rail = [
+	{ id: 'mixing', icon: 'palette', label: 'Mixing' },
+	{ id: 'commit', icon: 'lock', label: 'No undo' },
+	{ id: 'brushes', icon: 'brush', label: 'Brushes' },
+	{ id: 'sketchbooks', icon: 'book-open', label: 'Sketchbooks' },
+	{ id: 'pricing', icon: 'gift', label: 'Pricing' },
+];
+
+const store = appStoreLink();
+
+const traits = [
+	{ icon: 'palette', label: 'Pigment mixing' },
+	{ icon: 'brush-wrench', label: 'Fully editable brushes' },
+	{ icon: 'layer', label: 'One layer' },
+	{ icon: 'undo-2', label: 'No undo', slash: 'up' as const },
+	{ icon: 'search', label: 'No zoom or pan', slash: 'up' as const },
+];
+
+// Links into the manual appear once it's published (until then they'd lead to a 404).
+const manualLive = await manualIsLive();
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="preload" href="/fonts/fraunces-600-normal.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="/fonts/fraunces-600-italic.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="icon" href="/favicon.ico" sizes="48x48" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="canonical" href={new URL('/', Astro.site)} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta name="theme-color" content="#f2ecdd" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#171614" media="(prefers-color-scheme: dark)" />
+		<meta property="og:url" content={new URL('/', Astro.site)} />
+		<meta property="og:image" content={new URL('/og.jpg', Astro.site)} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Pleinbook: Paint it once. Mix your colours. Turn the page." />
+		<meta name="twitter:card" content="summary_large_image" />
+		<script is:inline>
+			// Follow the device's light/dark setting (there is no theme switch), live.
+			(() => {
+				const mq = matchMedia('(prefers-color-scheme: dark)');
+				const apply = () => (document.documentElement.dataset.theme = mq.matches ? 'dark' : 'light');
+				apply();
+				mq.addEventListener('change', apply);
+			})();
+		</script>
+	</head>
+	<body class="pb-paper">
+		<header>
+			<SiteNav />
+		</header>
+
+		<nav class="rail pb-glass" aria-label="Sections">
+			{
+				rail.map((r) => (
+					<a href={`#${r.id}`} data-rail={r.id} aria-label={r.label} title={r.label}>
+						<Icon name={r.icon} size={22} />
+					</a>
+				))
+			}
+		</nav>
+
+		<main>
+			<!-- Hero -->
+			<section class="hero" id="top">
+				<p class="chip pb-glass"><Brushmark size={18} /> Your sketchbook · coming soon</p>
+				<h1>
+					Paint it once.<br />
+					<span class="painted">Mix your colours.</span><br />
+					Turn the page.
+				</h1>
+				<p class="lede">
+					For the sketches you make to learn, not to frame. Load your brush, put the paint down, and let each page be
+					what it is.
+				</p>
+				<ul class="traits" aria-label="What makes it different">
+					{
+						traits.map((t) => (
+							<li class="pb-glass">
+								<Icon name={t.icon} size={16} slash={t.slash} />
+								{t.label}
+							</li>
+						))
+					}
+				</ul>
+				<div class="ctas">
+					<a class="btn primary" href={store.href} aria-label={store.label} {...(store.external ? { rel: 'noopener' } : {})}><AppStoreGlyph size={20} /> {store.button}</a>
+					{manualLive && <a class="btn pb-glass" href="/docs/">Read the manual <Icon name="arrow-right" size={18} /></a>}
+				</div>
+			</section>
+
+			<div class="mock-wrap">
+				<AppMock />
+			</div>
+
+			<!-- Mixing -->
+			<section id="mixing" class="section">
+				<header class="head">
+					<h2><span class="ink-blue">Blue</span> and <span class="ink-yellow">yellow</span> make <span class="ink-green">green</span>.</h2>
+					<p>
+						Most apps blend colours like light, so blue and yellow turn grey. Pleinbook mixes them like paint, everywhere
+						paint meets paint: on the page, in smudges, on the scratchpad and over toned paper.
+					</p>
+				</header>
+
+				<div class="mixer pb-glass" data-mixer>
+					<div class="seg" role="tablist" aria-label="Choose a mix">
+						{
+							mixes.map((m, i) => (
+								<button
+									type="button"
+									role="tab"
+									id={`tab-${m.id}`}
+									aria-controls={`mix-${m.id}`}
+									aria-selected={i === 0 ? 'true' : 'false'}
+									tabindex={i === 0 ? 0 : -1}
+								>
+									<i style={`--a:${m.pleinbook[0]};--b:${m.pleinbook.at(-1)}`} aria-hidden="true" />
+									{m.label}
+								</button>
+							))
+						}
+					</div>
+					{
+						mixes.map((m, i) => (
+							<div class="ladders" role="tabpanel" id={`mix-${m.id}`} aria-labelledby={`tab-${m.id}`} hidden={i !== 0}>
+								<div class="ladder">
+									<span class="lname">
+										<Icon name="lightbulb" size={16} stroke={2} class="lmark" /> Mixed in other apps
+									</span>
+									<div class="strip" role="img" aria-label={`${m.label} blended as light, as most apps do: the middle goes dull.`}>
+										<canvas data-mix={JSON.stringify({ colors: m.digital, seed: 101 + i * 7 })} />
+									</div>
+								</div>
+								<div class="ladder">
+									<span class="lname">
+										<Brushmark size={16} /> Mixed in Pleinbook
+									</span>
+									<div class="strip strong" role="img" aria-label={`${m.label} mixed as pigment in Pleinbook.`}>
+										<canvas data-mix={JSON.stringify({ colors: m.pleinbook, seed: 101 + i * 7 })} />
+									</div>
+								</div>
+							</div>
+						))
+					}
+				</div>
+			</section>
+
+			<!-- Commitment -->
+			<section id="commit" class="section">
+				<header class="head">
+					<h2>Every mark is a commitment.</h2>
+					<p>
+						Pleinbook takes away the digital crutches that make painting tentative. The fastest way to confident marks is
+						by removing the guardrails.
+					</p>
+				</header>
+				<div class="tiles three">
+					<article class="tile pb-glass">
+						<span class="glyph"><Icon name="undo-2" size={24} slash="up" /></span>
+						<h3>No undo</h3>
+						<p>
+							Strokes can't be taken back. Use the scratchpad to practise and test out brushes. Once you're on the page,
+							commit.
+						</p>
+					</article>
+					<article class="tile pb-glass">
+						<span class="glyph"><Icon name="tablet" size={24} /></span>
+						<h3>Fixed to the glass</h3>
+						<p>
+							No zoom, pan or rotate. The whole page is always in view. Turn your device like a traditional sketchbook.
+						</p>
+					</article>
+					<article class="tile pb-glass">
+						<span class="glyph"><Icon name="droplets" size={24} /></span>
+						<h3>One layer, always wet</h3>
+						<p>Paint never dries, so everything on the page stays blendable. No more experimenting in new layers, just paint.</p>
+					</article>
+				</div>
+				<p class="aside">
+					Want a safety net while you learn? {manualLive ? <a href="/docs/getting-started/#no-undo-and-easy-mode">Easy Mode</a> : 'Easy Mode'} adds a single
+					undo step.
+				</p>
+			</section>
+
+			<!-- Brushes -->
+			<section id="brushes" class="section">
+				<header class="head">
+					<h2>Brushes you can take apart.</h2>
+					<p>
+						Every brush opens in a full editor: tip, spacing, scatter, texture, and curves for pressure, tilt
+						and speed. Build custom kits to keep around your Pencil tip.
+					</p>
+				</header>
+				<div class="brush-grid">
+					<div class="tiles">
+						<article class="tile pb-glass row">
+							<span class="glyph"><Icon name="paintbrush" size={24} /></span>
+							<div>
+								<h3>Dry</h3>
+								<p>Stamping brushes that lay paint down: pencils, inks, gouache, bristle and texture.</p>
+							</div>
+						</article>
+						<article class="tile pb-glass row">
+							<span class="glyph"><Icon name="droplets" size={24} /></span>
+							<div>
+								<h3>Wet</h3>
+								<p>Brushes that pick up paint and drag it, mixing as they go.</p>
+							</div>
+						</article>
+						<article class="tile pb-glass row">
+							<span class="glyph"><Icon name="lasso" size={24} /></span>
+							<div>
+								<h3>Lasso</h3>
+								<p>Draw a shape and it fills as you go: flat, graded or textured.</p>
+							</div>
+						</article>
+					</div>
+					<KitRing />
+				</div>
+				<p class="aside">
+					Imports Krita brush bundles and Photoshop brush tips, and exports brushes back as Krita bundles.
+					{manualLive && <>{' '}<a href="/docs/krita-compatibility/">What carries over</a></>}
+				</p>
+			</section>
+
+			<!-- Sketchbooks -->
+			<section id="sketchbooks" class="section">
+				<header class="head">
+					<h2>A book of pages, not a folder of files.</h2>
+				</header>
+				<div class="tiles three">
+					<article class="tile pb-glass">
+						<div class="mini-books" aria-hidden="true">
+							<i style="--c:#195f6e" />
+							<i style="--c:#cd8f17" />
+							<i style="--c:#aa0017" />
+							<i style="--c:#41875d" />
+						</div>
+						<h3>Build a sketchbook</h3>
+						<p>
+							Picking a sketchbook for a traditional artist defines the format for a whole set of work. In Pleinbook you
+							configure sketchbooks to give a consistent format throughout a series of paintings.
+						</p>
+					</article>
+					<article class="tile pb-glass">
+						<div class="mini-pad pb-paper" aria-hidden="true">
+							<canvas data-strokes={strokes(SWATCHES)}></canvas>
+						</div>
+						<h3>Paper is cheap</h3>
+						<p>
+							The scratchpad automatically creates new pages for every sketchbook page allowing you to test paint and mix
+							colours before touching your work. Ran out of mixing space? Just grab another scratchpad page!
+						</p>
+					</article>
+					<article class="tile pb-glass">
+						<div class="mini-files" aria-hidden="true">
+							<i><b>PNG</b></i>
+							<i><b>KRA</b><span>Paper + paint</span></i>
+							<i class="pdf"><b>PDF</b><span>Whole book</span></i>
+						</div>
+						<h3>Beyond Pleinbook</h3>
+						<p>
+							Export your pages as PNGs or as a Krita file with separate paper and paint layers. Share an entire
+							sketchbook as a PDF with information about each piece.
+						</p>
+					</article>
+				</div>
+			</section>
+
+			<!-- Pricing -->
+			<section id="pricing" class="section">
+				<header class="head">
+					<h2>Free to paint.</h2>
+					<p>No subscription. Everything you need to paint is free, and one purchase unlocks some extras.</p>
+				</header>
+				<div class="tiles two">
+					<article class="tile pb-glass price">
+						<h3>Free Forever</h3>
+						<ul>
+							<li>Unlimited sketchbooks and pages</li>
+							<li>Standard paper and book covers</li>
+							<li>Pigment mixing workflow</li>
+							<li>Full brush editor and custom kits</li>
+							<li>Import and export your own brushes</li>
+							<li>Drawing guides, value and mirror checks</li>
+							<li>Export pages at their native resolutions</li>
+						</ul>
+					</article>
+					<article class="tile pb-glass price featured">
+						<!-- Wording and counts match the app's unlock screen (App/Store/UnlockViews.swift): 8 covers, 6 papers.
+						     Premium brush sets are planned, not in the app yet: add a count once they are. -->
+						<div class="price-head">
+							<h3>Pleinbook Unlock</h3>
+							<!-- UK price. The App Store sets other currencies; keep in step with App Store Connect. -->
+							<span class="price-tag">£7.99</span>
+						</div>
+						<p class="price-note">One-off purchase per Apple Account</p>
+						<ul>
+							<li><Icon name="film" size={18} /> Replay video of any page, from blank paper to the finished painting</li>
+							<li><Icon name="book" size={18} /> Whole sketchbook as a PDF art book</li>
+							<li><Icon name="book-image" size={18} /> 8 premium sketchbook covers</li>
+							<li><Icon name="grid-2x2" size={18} /> 6 premium paper textures</li>
+							<li><Icon name="paintbrush" size={18} /> Premium brush sets</li>
+							<li><Icon name="cloud" size={18} /> iCloud sync of your sketchbooks, brushes and settings across your devices</li>
+						</ul>
+					</article>
+				</div>
+			</section>
+
+			<!-- Final -->
+			<section id="get" class="final">
+				<Brushmark size={96} tile class="app-icon" />
+				<h2>{store.heading}</h2>
+				<p>{store.body}</p>
+				{
+					store.external ? (
+						<a class="btn primary" href={store.href} rel="noopener" aria-label={store.label}>
+							<AppStoreGlyph size={20} /> {store.button}
+						</a>
+					) : (
+						<a class="btn pb-glass" href="/support/">
+							Get in touch <Icon name="arrow-up-right" size={18} />
+						</a>
+					)
+				}
+			</section>
+		</main>
+
+		<footer class="foot">
+			<div class="foot-inner pb-glass">
+				<SiteFooterLinks />
+			</div>
+		</footer>
+
+		<script>
+			import { paintAll, paintWithin } from '../scripts/bristle';
+			paintAll();
+
+			// Mix picker: a segmented control (tabs) over the ladders.
+			for (const mixer of document.querySelectorAll<HTMLElement>('[data-mixer]')) {
+				const tabs = [...mixer.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+				const select = (tab: HTMLButtonElement, focus = false) => {
+					for (const t of tabs) {
+						const on = t === tab;
+						t.setAttribute('aria-selected', String(on));
+						t.tabIndex = on ? 0 : -1;
+						const panel = document.getElementById(t.getAttribute('aria-controls')!);
+						if (panel) {
+							panel.hidden = !on;
+							if (on) paintWithin(panel);
+						}
+					}
+					if (focus) tab.focus();
+				};
+				tabs.forEach((t, i) => {
+					t.addEventListener('click', () => select(t));
+					t.addEventListener('keydown', (e) => {
+						const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+						if (d) {
+							e.preventDefault();
+							select(tabs[(i + d + tabs.length) % tabs.length], true);
+						}
+					});
+				});
+			}
+
+			// Tool rail: highlight the section in view.
+			const links = new Map(
+				[...document.querySelectorAll<HTMLAnchorElement>('[data-rail]')].map((a) => [a.dataset.rail!, a]),
+			);
+			const io = new IntersectionObserver(
+				(entries) => {
+					for (const e of entries) {
+						if (!e.isIntersecting) continue;
+						for (const [id, a] of links) a.toggleAttribute('aria-current', id === e.target.id);
+					}
+				},
+				{ rootMargin: '-45% 0px -50% 0px' },
+			);
+			for (const id of ['top', ...links.keys()]) {
+				const el = document.getElementById(id);
+				if (el) io.observe(el);
+			}
+			addEventListener(
+				'scroll',
+				() => {
+					if (innerHeight + scrollY < document.documentElement.scrollHeight - 4) return;
+					const last = [...links.keys()].at(-1);
+					for (const [id, a] of links) a.toggleAttribute('aria-current', id === last);
+				},
+				{ passive: true },
+			);
+		</script>
+	</body>
+</html>
+
+<style>
+	:global(html) {
+		background: var(--pb-paper);
+		scroll-behavior: smooth;
+		scroll-padding-top: 88px;
+	}
+	:global(body) {
+		margin: 0;
+		color: var(--pb-ink);
+		font-family: var(--pb-font);
+		font-size: 17px;
+		line-height: 1.5;
+		-webkit-font-smoothing: antialiased;
+		text-rendering: optimizeLegibility;
+	}
+	:global(a) {
+		color: var(--pb-link);
+	}
+	:global(a:hover) {
+		color: var(--pb-link-hover);
+	}
+
+	main {
+		max-width: 1120px;
+		margin-inline: auto;
+		padding-inline: 16px;
+	}
+	@media (min-width: 768px) {
+		main {
+			padding-inline: 32px;
+		}
+	}
+
+	/* Hero */
+	.hero {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-top: clamp(112px, 16vw, 168px);
+		text-align: center;
+	}
+	.chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		margin: 0 0 28px;
+		padding: 8px 16px 8px 12px;
+		border-radius: 999px;
+		color: var(--pb-ink-2);
+		font-size: 14px;
+		font-weight: 550;
+	}
+	/* Headings: Fraunces (theme.css). */
+	h1,
+	h2,
+	.tile h3 {
+		font-family: var(--pb-font-display);
+		font-weight: 600;
+		font-variation-settings: var(--pb-display-axes);
+	}
+	h1 {
+		margin: 0;
+		font-size: clamp(44px, 9vw, 96px);
+		line-height: 1.02;
+		letter-spacing: -0.02em;
+	}
+	.painted {
+		font-style: italic;
+		font-weight: 500;
+		background: var(--pb-brand);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		padding-inline: 0.04em;
+	}
+	:global([data-theme='dark']) .painted {
+		background: linear-gradient(135deg, #4b9be0 0%, #4fb59a 50%, #a8ec74 100%);
+		-webkit-background-clip: text;
+		background-clip: text;
+	}
+	.lede {
+		max-width: 40rem;
+		margin: 28px 0 0;
+		color: var(--pb-ink-2);
+		font-size: clamp(18px, 2.2vw, 21px);
+		line-height: 1.5;
+		letter-spacing: -0.01em;
+		text-wrap: pretty;
+	}
+	.traits {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px;
+		max-width: 52rem;
+		margin: 24px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+	.traits li {
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		height: 34px;
+		padding-inline: 12px 14px;
+		border-radius: 999px;
+		color: var(--pb-ink-2);
+		font-size: 14px;
+		font-weight: 550;
+		white-space: nowrap;
+	}
+	.traits li :global(svg) {
+		color: var(--pb-ink-3);
+	}
+	.ctas {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 12px;
+		margin-top: 36px;
+	}
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		height: 52px;
+		padding-inline: 24px;
+		border-radius: 999px;
+		color: var(--pb-ink);
+		font-size: 16px;
+		font-weight: 600;
+		text-decoration: none;
+		white-space: nowrap;
+		transition:
+			transform 0.15s,
+			box-shadow 0.15s;
+	}
+	.btn:hover {
+		color: var(--pb-ink);
+		transform: translateY(-1px);
+	}
+	.btn.primary {
+		background: var(--pb-cta-bg);
+		color: var(--pb-cta-fg);
+		/* Same shadow and inner edge as the glass, so the two buttons sit on the page the same way. */
+		box-shadow:
+			var(--pb-glass-depth),
+			inset 0 0 0 0.5px var(--pb-glass-edge),
+			var(--pb-glass-shadow);
+	}
+	.btn.primary:hover {
+		color: var(--pb-cta-fg);
+	}
+
+	.mock-wrap {
+		max-width: 1040px;
+		margin: clamp(48px, 8vw, 88px) auto 0;
+	}
+
+	/* Sections */
+	.section {
+		padding-top: clamp(96px, 14vw, 160px);
+	}
+	.head {
+		max-width: 44rem;
+		margin-bottom: 40px;
+	}
+	h2 {
+		margin: 0;
+		font-size: clamp(34px, 5.4vw, 56px);
+		line-height: 1.06;
+		letter-spacing: -0.02em;
+		text-wrap: balance;
+	}
+	/* The colour words in the mixing heading. Blue and green come from the engine's yellow + blue
+	   mix; yellow is deepened to an ochre in light mode, since pure yellow is unreadable on cream. */
+	.ink-blue {
+		color: #245ad3;
+	}
+	.ink-yellow {
+		color: #a67c00;
+	}
+	.ink-green {
+		color: #56934c;
+	}
+	:global([data-theme='dark']) .ink-blue {
+		color: #6c95f2;
+	}
+	:global([data-theme='dark']) .ink-yellow {
+		color: #ffd700;
+	}
+	:global([data-theme='dark']) .ink-green {
+		color: #89b01d;
+	}
+	.head p {
+		margin: 18px 0 0;
+		color: var(--pb-ink-2);
+		font-size: clamp(18px, 2vw, 20px);
+		text-wrap: pretty;
+	}
+	.aside {
+		margin: 24px 0 0;
+		color: var(--pb-ink-2);
+		font-size: 16px;
+	}
+
+	/* Mixer */
+	/* The tabs, then every mix's panel stacked in the same place: hidden panels keep their size, so
+	   their strips can be painted ahead of time (src/scripts/bristle.ts) and switching is instant. */
+	.mixer {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		padding: clamp(16px, 3vw, 32px);
+		border-radius: var(--pb-radius-l);
+	}
+	/* Two rows of four at every width; when they don't fit, the rows scroll sideways together. */
+	.seg {
+		display: grid;
+		grid-template-columns: repeat(4, max-content);
+		gap: 6px;
+		overflow-x: auto;
+		scrollbar-width: none;
+	}
+	.seg::-webkit-scrollbar {
+		display: none;
+	}
+	/* Phones: the scrolling rows run to the card's edges. */
+	@media (max-width: 600px) {
+		.seg {
+			margin-inline: calc(-1 * clamp(16px, 3vw, 32px));
+			padding-inline: clamp(16px, 3vw, 32px);
+			scroll-padding-inline: clamp(16px, 3vw, 32px);
+		}
+	}
+	.seg button {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		height: 38px;
+		padding-inline: 14px;
+		border: 0;
+		border-radius: 999px;
+		background: rgb(120 100 70 / 0.08);
+		color: var(--pb-ink-2);
+		font: 550 15px/1 var(--pb-font);
+		cursor: pointer;
+		white-space: nowrap;
+		flex: none;
+	}
+	:global([data-theme='dark']) .seg button {
+		background: rgb(0 0 0 / 0.2);
+	}
+	.seg button:hover {
+		color: var(--pb-ink);
+	}
+	.seg button[aria-selected='true'] {
+		background: var(--pb-glass-bg-strong);
+		color: var(--pb-ink);
+		box-shadow:
+			var(--pb-glass-depth),
+			inset 0 0 0 1.5px #0a84ff;
+	}
+	.seg i {
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, var(--a) 50%, var(--b) 50%);
+		box-shadow: inset 0 0 0 0.5px rgb(0 0 0 / 0.2);
+	}
+	.ladders {
+		grid-row: 2;
+		grid-column: 1;
+		display: grid;
+		gap: 18px;
+		margin-top: 28px;
+	}
+	.ladders[hidden] {
+		display: grid;
+		visibility: hidden;
+	}
+	.ladder {
+		display: grid;
+		gap: 8px;
+	}
+	.lname {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		color: var(--pb-ink-2);
+		font-size: 14px;
+		font-weight: 600;
+	}
+	/* A lightbulb (mixed like light) in the brushmark's 16 px, so both labels' words line up. In the
+	   heading's yellow: ochre on cream, the paint's yellow in dark mode. */
+	.lname :global(.lmark) {
+		flex: none;
+		color: #a67c00;
+	}
+	:global([data-theme='dark']) .lname :global(.lmark) {
+		color: #ffd700;
+	}
+	/* The mix, painted straight onto the card (src/scripts/bristle.ts): no box, nothing cropped. */
+	.strip {
+		height: clamp(60px, 8.5vw, 92px);
+		margin-inline: calc(-0.12 * clamp(60px, 8.5vw, 92px));
+	}
+	.strip.strong {
+		height: clamp(76px, 11vw, 120px);
+	}
+	.strip canvas {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	/* Tiles */
+	.tiles {
+		display: grid;
+		gap: 16px;
+	}
+	/* Three cards: one column on phones; at middle widths two across with the third centred beneath
+	   (a four-column grid, each card spanning two); three across on wide screens. */
+	.tiles.three {
+		grid-template-columns: 1fr;
+	}
+	@media (min-width: 600px) {
+		.tiles.three {
+			grid-template-columns: repeat(4, 1fr);
+		}
+		.tiles.three > * {
+			grid-column: span 2;
+		}
+		.tiles.three > :last-child:nth-child(odd) {
+			grid-column: 2 / span 2;
+		}
+	}
+	@media (min-width: 880px) {
+		.tiles.three {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		.tiles.three > *,
+		.tiles.three > :last-child:nth-child(odd) {
+			grid-column: auto;
+		}
+	}
+	.tiles.two {
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+	}
+	.tile {
+		padding: 28px;
+		border-radius: var(--pb-radius);
+	}
+	.tile.row {
+		display: flex;
+		gap: 18px;
+		align-items: flex-start;
+		padding: 22px 24px;
+	}
+	.tile h3 {
+		margin: 0 0 8px;
+		font-size: 23px;
+		letter-spacing: -0.01em;
+	}
+	.tile p {
+		margin: 0;
+		color: var(--pb-ink-2);
+		font-size: 16px;
+		line-height: 1.5;
+	}
+	.glyph {
+		position: relative;
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 48px;
+		height: 48px;
+		margin-bottom: 18px;
+		border-radius: 14px;
+		background: var(--pb-glass-bg-strong);
+		box-shadow:
+			inset 0 1px 0 var(--pb-glass-highlight),
+			inset 0 0 0 0.5px var(--pb-glass-edge);
+		color: var(--pb-brand-blue);
+	}
+	:global([data-theme='dark']) .glyph {
+		color: #7db7ff;
+	}
+	.tile.row .glyph {
+		margin-bottom: 0;
+	}
+
+	/* Brushes + kit ring */
+	.brush-grid {
+		display: grid;
+		gap: 16px;
+	}
+	@media (min-width: 880px) {
+		.brush-grid {
+			grid-template-columns: 1.1fr 1fr;
+		}
+	}
+
+	/* Sketchbooks */
+	.mini-pad {
+		height: 132px;
+		margin-bottom: 22px;
+		overflow: hidden;
+		border-radius: 16px;
+		background-color: #f2ecdd;
+		background-image: var(--pb-grain-light);
+		box-shadow: inset 0 0 0 0.5px var(--pb-rule);
+	}
+	.mini-pad canvas {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	.mini-books {
+		display: flex;
+		align-items: flex-end;
+		gap: 14px;
+		height: 132px;
+		margin-bottom: 22px;
+		padding-inline: 8px;
+	}
+	.mini-books i {
+		flex: 1;
+		max-width: 72px;
+		height: 96px;
+		border-radius: 4px 10px 10px 4px;
+		background:
+			linear-gradient(90deg, rgb(0 0 0 / 0.25) 0 5px, transparent 5px),
+			linear-gradient(160deg, rgb(255 255 255 / 0.25), transparent 50%),
+			var(--c);
+		box-shadow: 0 8px 18px -8px rgb(30 20 10 / 0.5);
+	}
+	.mini-books i:nth-child(2) {
+		height: 104px;
+	}
+	.mini-books i:nth-child(3) {
+		height: 88px;
+	}
+
+	/* Export: three file sheets with a folded corner */
+	.mini-files {
+		display: flex;
+		align-items: flex-end;
+		gap: 14px;
+		height: 132px;
+		margin-bottom: 22px;
+		padding-inline: 8px;
+	}
+	.mini-files i {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		gap: 2px;
+		flex: 1;
+		max-width: 76px;
+		height: 98px;
+		padding: 10px;
+		border-radius: 6px;
+		background:
+			linear-gradient(225deg, transparent 13px, #f6f2e8 13px);
+		box-shadow: 0 8px 18px -10px rgb(30 20 10 / 0.45);
+		filter: drop-shadow(0 0 0.5px rgb(80 60 30 / 0.35));
+		font-style: normal;
+	}
+	.mini-files i::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 18px;
+		height: 18px;
+		border-radius: 0 0 0 4px;
+		background: linear-gradient(225deg, transparent 50%, #ddd5c4 50%);
+	}
+	.mini-files i:nth-child(2) {
+		height: 108px;
+	}
+	.mini-files i.pdf {
+		height: 92px;
+	}
+	.mini-files b {
+		color: #1d1c1a;
+		font-size: 15px;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+	}
+	.mini-files span {
+		color: #5f594f;
+		font-size: 11px;
+		line-height: 1.2;
+	}
+
+
+	/* Pricing */
+	.price ul {
+		display: grid;
+		gap: 12px;
+		margin: 18px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+	.price li {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+		line-height: 1.45;
+		color: var(--pb-ink-2);
+	}
+	.price:not(.featured) li::before {
+		content: '';
+		flex: none;
+		width: 7px;
+		height: 7px;
+		margin: 0.5em 6px 0 5px;
+		border-radius: 50%;
+		background: var(--pb-ink-3);
+	}
+	.price li :global(svg) {
+		flex: none;
+		margin-top: 0.1em;
+		color: var(--pb-brand-blue);
+	}
+	:global([data-theme='dark']) .price li :global(svg) {
+		color: #7db7ff;
+	}
+	.price-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 12px;
+	}
+	/* Same face and size as the card title beside it (.tile h3). */
+	.price-tag {
+		margin: 0 0 8px;
+		font-family: var(--pb-font-display);
+		font-variation-settings: var(--pb-display-axes);
+		font-size: 23px;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		white-space: nowrap;
+	}
+	.tile .price-note {
+		margin: -4px 0 0;
+		color: var(--pb-ink-3);
+		font-size: 15px;
+	}
+	/* The Pleinbook Unlock card: the same glass, tinted an even wash of the brushmark's teal (no gradient across the face). */
+	.featured {
+		--tint: rgb(42 121 118 / 0.13);
+		background: linear-gradient(var(--tint), var(--tint)), var(--pb-glass-bg);
+		box-shadow:
+			var(--pb-glass-depth),
+			inset 0 0 0 0.5px rgb(42 121 118 / 0.35),
+			var(--pb-glass-shadow);
+	}
+	:global([data-theme='dark']) .featured {
+		--tint: rgb(79 181 154 / 0.14);
+		box-shadow:
+			var(--pb-glass-depth),
+			inset 0 0 0 0.5px rgb(79 181 154 / 0.35),
+			var(--pb-glass-shadow);
+	}
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .featured {
+			--tint: rgb(79 181 154 / 0.14);
+		}
+	}
+
+	/* Final */
+	.final {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-block: clamp(112px, 16vw, 176px) 24px;
+		text-align: center;
+	}
+	.final :global(.app-icon) {
+		margin-bottom: 28px;
+		filter: drop-shadow(0 18px 30px rgb(30 20 10 / 0.25));
+	}
+	.final p {
+		max-width: 30rem;
+		margin: 16px 0 28px;
+		color: var(--pb-ink-2);
+		font-size: 19px;
+	}
+
+	/* Footer */
+	.foot {
+		max-width: 1120px;
+		margin: 64px auto 0;
+		padding: 0 16px 16px;
+	}
+	.foot-inner {
+		padding: 4px 24px 20px;
+		border-radius: var(--pb-radius);
+	}
+	.foot-inner :global(.pb-footer) {
+		margin-top: 0;
+		border-top: 0;
+	}
+
+	/* Section rail, like the app's tool rail */
+	.rail {
+		position: fixed;
+		z-index: 40;
+		top: 50%;
+		right: 12px;
+		display: none;
+		flex-direction: column;
+		gap: 6px;
+		padding: 8px;
+		border-radius: 999px;
+		transform: translateY(-50%);
+	}
+	@media (min-width: 1240px) {
+		.rail {
+			display: flex;
+		}
+	}
+	.rail a {
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		color: var(--pb-ink-2);
+		transition:
+			background-color 0.15s,
+			color 0.15s;
+	}
+	.rail a:hover {
+		background: var(--pb-glass-hover);
+		color: var(--pb-ink);
+	}
+	.rail a[aria-current] {
+		background: var(--pb-glass-bg-strong);
+		color: var(--pb-ink);
+		box-shadow:
+			inset 0 1px 0 var(--pb-glass-highlight),
+			0 0 0 2px #0a84ff;
+	}
+</style>

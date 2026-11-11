@@ -54,7 +54,7 @@ draft: true               # delete to publish
 
 | URL | Source |
 | --- | --- |
-| `/` | `src/pages/index.astro` (designed in code) |
+| `/` | `src/pages/index.astro`: a holding page while the site is rebuilt. The full homepage is parked in `src/pages/_home.astro` (not published); rename it to `index.astro` to bring it back. |
 | `/support/`, `/privacy/` | `src/content/docs/*.md(x)` (`template: splash`, no sidebar) |
 | `/changelog/`, `/changelog.xml` | `src/pages/changelog.astro`, `changelog.xml.ts` from `src/changelog/*.md` |
 | `/docs/...` | `src/content/docs/docs/*.mdx`: one page per topic, its sections listed in the left panel |
