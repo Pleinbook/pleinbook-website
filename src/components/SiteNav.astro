@@ -43,6 +43,26 @@ const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'p
 	</a>
 </div>
 
+<script>
+	// The capsule and the corner button are as wide as their text, which is rarely a whole number of
+	// pixels. At a fractional edge, the last column of pixels down a rounded end is half-covered, so the
+	// glass rim reads as a short straight edge there. Round their widths up to whole pixels, and again
+	// whenever the row's width changes (the name hides, the window resizes).
+	const nav = document.querySelector<HTMLElement>('.nav');
+	if (nav) {
+		const pills = [...nav.querySelectorAll<HTMLElement>('.bar, .corner')];
+		const snap = () => {
+			for (const el of pills) el.style.width = '';
+			const widths = pills.map((el) => el.getBoundingClientRect().width);
+			pills.forEach((el, i) => {
+				if (widths[i] % 1) el.style.width = `${Math.ceil(widths[i])}px`;
+			});
+		};
+		snap();
+		new ResizeObserver(snap).observe(nav);
+	}
+</script>
+
 <style>
 	.nav {
 		position: fixed;
@@ -62,6 +82,7 @@ const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'p
 		pointer-events: auto;
 	}
 	.bar {
+		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		gap: 4px;
@@ -114,6 +135,7 @@ const here = (prefix: string) => (path.startsWith(prefix) ? { 'aria-current': 'p
 		font-weight: 600;
 	}
 	.corner {
+		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		gap: 8px;

@@ -1,6 +1,14 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import sitemap from '@astrojs/sitemap';
+import { readdirSync, readFileSync } from 'node:fs';
+
+// The changelog page goes in the sitemap once a release is published (a file in src/changelog/
+// without `draft: true`), as its links appear then too.
+const changelogPublished = readdirSync('src/changelog')
+	.filter((f) => f.endsWith('.md'))
+	.some((f) => !/^draft:\s*true\s*$/m.test(readFileSync(`src/changelog/${f}`, 'utf8')));
 
 // Static output only: Cloudflare Pages serves the `dist/` folder as-is.
 // Build command `npm run build`, output directory `dist`.
@@ -8,6 +16,11 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	site: 'https://pleinbook.com',
 	integrations: [
+		// Our own sitemap (Starlight then skips its own): every page but the 404 page, and the
+		// changelog only once it has a release.
+		sitemap({
+			filter: (page) => !page.endsWith('/404/') && (changelogPublished || !page.endsWith('/changelog/')),
+		}),
 		starlight({
 			title: 'Pleinbook',
 			description: 'A pigment-mixing digital sketchbook: one layer, no undo.',
